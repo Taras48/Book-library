@@ -4,10 +4,10 @@ import com.library.booklibrary.dto.BookDto
 import com.library.booklibrary.dto.authorDtoToAuthor
 
 data class Book(
-    val id: Long,
+    val id: Long?,
     val name: String,
-    val authors: MutableList<Author> = mutableListOf(),
-    val gener: Genre
+    var authors: MutableList<Author> = mutableListOf(),
+    val gener: Genre?
 )
 
 fun Book.bookToBookDto()=
@@ -15,7 +15,7 @@ fun Book.bookToBookDto()=
 this.id,
 this.name,
 this.authors.map { it.authorToAuthorDto() }.toMutableList(),
-this.gener.genreToGenreDto(),
+this.gener?.genreToGenreDto(),
 )
 
 

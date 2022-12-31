@@ -4,7 +4,9 @@ import com.library.booklibrary.dao.BookDao
 import com.library.booklibrary.dto.BookDto
 import com.library.booklibrary.dto.bookDtoToBook
 import com.library.booklibrary.model.bookToBookDto
+import org.springframework.stereotype.Service
 
+@Service
 class BookServiceImpl(
     val bookDao: BookDao
 ):BookService {

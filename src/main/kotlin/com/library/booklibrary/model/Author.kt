@@ -4,7 +4,7 @@ import com.library.booklibrary.dto.AuthorDto
 
 data class Author(
     val id: Long,
-    val surName: String,
+    val surName: String?,
 )
 
 

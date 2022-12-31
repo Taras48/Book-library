@@ -33,6 +33,25 @@ class BookDaoImpl(
 
             books
         }
+
+        val AUTHOR_EXTRACTOR = ResultSetExtractor<MutableMap<Long, MutableList<Author>>> { rs ->
+            val booksWithAuthors = mutableMapOf<Long, MutableList<Author>>()
+
+            while (rs.next()) {
+                val bookId = rs.getLong("book_id");
+                booksWithAuthors.putIfAbsent(bookId, mutableListOf())
+                rs.getLong("author_id")?.let {
+                    booksWithAuthors.get(bookId)!!.add(
+                        Author(
+                            it,
+                            rs?.getString("author_name")
+                        )
+                    )
+                }
+            }
+
+            booksWithAuthors
+        }
     }
 
     override fun findBookById(id: Long) =
@@ -40,11 +59,13 @@ class BookDaoImpl(
             """select b.id book_id, b.name book_name, g.id gener_id, g.name gener_name
                 from books b
                 left join geners g
-                on b.gener_id = g.id
+                on b.id = g.book_id 
+                where b.id = :id
                 """.trimMargin(),
+            mapOf("id" to id),
             EXTRACTOR
         )?.firstOrNull()?.let {
-            it.authors.plus(getAuthorsForBooks()[it.id])
+            it.authors = getAuthorsForBooks()!![it.id] ?: mutableListOf()
 
             it
         }
@@ -54,42 +75,32 @@ class BookDaoImpl(
             """select b.id book_id, b.name book_name, g.id gener_id, g.name gener_name
                 from books b
                 left join geners g
-                on b.gener_id = g.id
+                on b.id = g.book_id
                 """.trimMargin(),
             EXTRACTOR
         )
-        val authorsForBooks = getAuthorsForBooks()
+
+        val map = getAuthorsForBooks()!!
 
         books?.map {
-            it.authors.plus(authorsForBooks[it.id])
+            it.authors = map[it.id] ?: mutableListOf()
         }
 
         return books
     }
 
-    private fun getAuthorsForBooks(): Map<Long, List<Author>> {
-        return jdbc.query(
-            """select b.id  book_id, a.surname as author_name, a.id as author_id
+    private fun getAuthorsForBooks(): MutableMap<Long, MutableList<Author>>? {
+        val map = jdbc.query(
+            """
+               select b.id  book_id, a.surname as author_name, a.id as author_id
                from books b
-               left join authors a on a.book_id = b.id
-                """.trimMargin()
-        ) { rs ->
-            val booksWithAuthors = mutableMapOf<Long, MutableList<Author>>()
+               left join authors a 
+               on a.book_id = b.id
+            """.trimMargin(),
+            AUTHOR_EXTRACTOR
+        )
 
-            while (rs.next()) {
-                val bookId = rs.getLong("book_id");
-                booksWithAuthors.putIfAbsent(bookId, mutableListOf())
-
-                booksWithAuthors.get(bookId)!!.add(
-                    Author(
-                        rs.getLong("author_id"),
-                        rs.getString("author_name")
-                    )
-                )
-            }
-
-            booksWithAuthors
-        } as Map<Long, List<Author>>
+        return map
     }
 
 
@@ -112,6 +123,6 @@ class BookDaoImpl(
     }
 
     override fun updateBook(book: Book) {
-        jdbc.update("update books name = :name where id = :Id", mapOf("id" to book.id, "name" to book.name))
+        jdbc.update("update books set name = :name where id = :id", mapOf("id" to book.id, "name" to book.name))
     }
 }
