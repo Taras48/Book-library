@@ -7,9 +7,10 @@ import org.springframework.jdbc.core.ResultSetExtractor
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder
+import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 
-@Service
+@Repository
 class BookDaoImpl(
     private val jdbc: NamedParameterJdbcTemplate,
 ) : BookDao {
@@ -102,7 +103,6 @@ class BookDaoImpl(
 
         return map
     }
-
 
     override fun deleteBookById(id: Long) =
         jdbc.update("delete from books where id = :id", mapOf("id" to id))
