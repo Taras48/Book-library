@@ -1,21 +1,40 @@
 package com.library.booklibrary.model
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.library.booklibrary.dto.BookDto
-import com.library.booklibrary.dto.authorDtoToAuthor
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
+import javax.persistence.*
 
-data class Book(
+@Entity
+@Table(name = "books")
+class Book(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
+
+    @Column(name = "name")
     val name: String,
-    var authors: MutableList<Author> = mutableListOf(),
-    var gener: Genre? = null
+
+    @OneToMany(targetEntity = Comment::class, cascade = [CascadeType.ALL])
+    @JoinColumn(name = "book_id")
+    @Fetch(FetchMode.SUBSELECT)
+    var comments: MutableList<Comment> = mutableListOf(),
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+    @JoinTable(name = "author_books",
+        joinColumns = [JoinColumn(name = "author_id")],
+        inverseJoinColumns = [JoinColumn(name = "book_id")])
+    @JsonIgnoreProperties("books")
+    var authors: MutableList<Author> = mutableListOf()
 )
 
-fun Book.bookToBookDto()=
+fun Book.bookToBookDto() =
     BookDto(
-this.id,
-this.name,
-this.authors.map { it.authorToAuthorDto() }.toMutableList(),
-this.gener?.genreToGenreDto(),
-)
+        this.id,
+        this.name,
+        this.authors.map { it.authorToAuthorDto() }.toMutableList(),
+        this.comments.map { it.commentToCommentDto()}.toMutableList()
+    )
 
 

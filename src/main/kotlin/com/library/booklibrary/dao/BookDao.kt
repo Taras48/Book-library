@@ -31,14 +31,15 @@ interface BookDao {
      * Обновление книги
      *
      * @param book  книга
+     * @return количество измененных строк
      */
-    fun updateBook(book: Book)
+    fun updateBook(book: Book): Int
 
     /**
      * Создание книги
      *
      * @param book  книга
-     * @return идентификатор книги
+     * @return книга
      */
-    fun insertBook(book: Book): Long
+    fun saveBook(book: Book): Book
 }

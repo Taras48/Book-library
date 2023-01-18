@@ -1,22 +1,47 @@
-DROP TABLE IF EXISTS BOOKS;
-CREATE TABLE BOOKS
+CREATE TABLE genres
 (
-    ID   BIGINT PRIMARY KEY AUTO_INCREMENT,
-    NAME VARCHAR(255)
+    id   BIGINT AUTO_INCREMENT NOT NULL,
+    name VARCHAR(255),
+    CONSTRAINT pk_genres PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS GENERS;
-CREATE TABLE GENERS
+CREATE TABLE authors
 (
-    ID      BIGINT PRIMARY KEY AUTO_INCREMENT,
-    NAME    VARCHAR(255),
-    BOOK_ID BIGINT references BOOKS (ID)  on delete cascade
+    id       BIGINT AUTO_INCREMENT NOT NULL,
+    sur_name VARCHAR(255),
+    CONSTRAINT pk_authors PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS AUTHORS;
-CREATE TABLE AUTHORS
+CREATE TABLE author_books
 (
-    ID      BIGINT PRIMARY KEY AUTO_INCREMENT,
-    SURNAME VARCHAR(255),
-    BOOK_ID BIGINT references BOOKS (ID) on delete cascade
+    author_id BIGINT NOT NULL,
+    book_id   BIGINT NOT NULL
 );
+
+CREATE TABLE books
+(
+    id       BIGINT AUTO_INCREMENT NOT NULL,
+    name     VARCHAR(255),
+    genre_id BIGINT,
+    CONSTRAINT pk_books PRIMARY KEY (id)
+);
+
+ALTER TABLE books
+    ADD CONSTRAINT FK_BOOKS_ON_GENRE FOREIGN KEY (genre_id) REFERENCES genres (id);
+
+ALTER TABLE author_books
+    ADD CONSTRAINT fk_autboo_on_author FOREIGN KEY (book_id) REFERENCES authors (id);
+
+ALTER TABLE author_books
+    ADD CONSTRAINT fk_autboo_on_book FOREIGN KEY (author_id) REFERENCES books (id);
+
+CREATE TABLE comments
+(
+    id      BIGINT AUTO_INCREMENT NOT NULL,
+    text    VARCHAR(255),
+    book_id BIGINT,
+    CONSTRAINT pk_comments PRIMARY KEY (id)
+);
+
+ALTER TABLE comments
+    ADD CONSTRAINT FK_COMMENTS_ON_BOOK FOREIGN KEY (book_id) REFERENCES books (id);

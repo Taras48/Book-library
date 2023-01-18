@@ -31,14 +31,15 @@ interface BookService {
      * Обновление книги
      *
      * @param book  книга
+     * @return количество измененных строк
      */
-    fun updateBook(book: BookDto)
+    fun updateBook(book: BookDto): Int
 
     /**
      * Создание книги
      *
      * @param book  книга
-     * @return идентификатор книги
+     * @return книга
      */
-    fun insertBook(book: BookDto): Long
+    fun saveBook(book: BookDto): Book
 }

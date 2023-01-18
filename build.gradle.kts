@@ -8,8 +8,9 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
 
     kotlin("jvm") version "1.7.10"
-    id("org.jetbrains.kotlin.plugin.spring") version "1.7.10"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
+    kotlin("plugin.spring") version "1.7.10"
+    kotlin("plugin.allopen") version "1.7.10"
+    kotlin("plugin.jpa") version "1.7.10"
 }
 
 group = "com.library1"
@@ -22,9 +23,11 @@ repositories {
 
 dependencies {
     //Spring
-    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+//    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.springframework.shell:spring-shell-starter:2.1.4")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
 
     //Kotlin
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -40,6 +43,13 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
 
+}
+allOpen {
+    annotations(
+        "javax.persistence.Entity",
+        "javax.persistence.MappedSuperclass",
+        "javax.persistence.Embedabble"
+    )
 }
 
 tasks.withType<KotlinCompile> {

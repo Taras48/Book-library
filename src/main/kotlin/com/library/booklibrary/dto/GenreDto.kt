@@ -4,7 +4,8 @@ import com.library.booklibrary.model.Genre
 
 data class GenreDto(
     val id: Long,
-    val name: String
+    val name: String,
+    var books: MutableList<BookDto> = mutableListOf()
 )
 
 fun GenreDto.genreDtoToGenre() =
