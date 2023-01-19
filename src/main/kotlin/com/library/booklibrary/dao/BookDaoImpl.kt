@@ -9,10 +9,8 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 @Repository
-class BookDaoImpl(
-    @PersistenceContext private val em: EntityManager
-) : BookDao {
-
+class BookDaoImpl(): BookDao {
+    @PersistenceContext private lateinit var em: EntityManager
     override fun findBookById(id: Long) =
         em.find(Book::class.java, id)
 

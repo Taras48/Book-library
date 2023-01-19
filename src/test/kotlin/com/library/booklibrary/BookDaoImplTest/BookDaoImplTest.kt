@@ -3,31 +3,29 @@ package com.library.booklibrary.BookDaoImplTest
 import com.library.booklibrary.dao.BookDaoImpl
 import com.library.booklibrary.model.Author
 import com.library.booklibrary.model.Book
-import com.library.booklibrary.model.Genre
+import com.library.booklibrary.model.Comment
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
 import org.springframework.context.annotation.Import
 import kotlin.test.assertEquals
 
-@JdbcTest
+@DataJpaTest
 @Import(BookDaoImpl::class)
-class BookDaoImplTest(
-    @Autowired private val bookDao: BookDaoImpl,
-) {
+class BookDaoImplTest() {
 
+    @Autowired
+    private lateinit var bookDao: BookDaoImpl
+
+    @Autowired
+    private lateinit var em: TestEntityManager
     @Test
     @DisplayName("Получение книги по id")
     fun findBookById() {
         val book = bookDao.findBookById(1)
-
-        val expected = Book(
-            id = 1,
-            name = "book1",
-            authors = mutableListOf(Author(1, "author1")),
-            gener = Genre(1, "gener1")
-        )
+        val expected = em.find(Book::class.java, 1L)
 
         assertEquals(expected, book)
     }
@@ -35,31 +33,21 @@ class BookDaoImplTest(
     @Test
     @DisplayName("Удаление книги по id")
     fun deleteBookById() {
-        bookDao.deleteBookById(1)
-        val books = bookDao.getAllBooks()
+        val book = em.find(Book::class.java, 1L)
+        em.detach(book)
 
-        val expected = listOf(
-            Book(
-                id = 2,
-                name = "book2",
-                authors = mutableListOf(
-                    Author(2, "author2"),
-                    Author(3, "author3")
-                ),
-                gener = Genre(2, "gener2")
-            )
-        )
+        val actual = bookDao.deleteBookById(1L)
 
-        assertEquals(expected, books)
+        assertEquals(1, actual)
     }
 
     @Test
     @DisplayName("Создание книги")
-    fun insertBook() {
-        val book = Book(name = "test")
-        val bookId = bookDao.insertBook(book)
+    fun saveBook() {
+        val book = bookDao.saveBook(Book(name = "test"))
+        val expected = em.find(Book::class.java, 3L)
 
-        assertEquals(3, bookId)
+        assertEquals(expected, book)
     }
 
     @Test
@@ -72,16 +60,21 @@ class BookDaoImplTest(
                 id = 1,
                 name = "book1",
                 authors = mutableListOf(Author(1, "author1")),
-                gener = Genre(1, "gener1")
+                comments = mutableListOf(
+                    Comment(1, "text1"),
+                    Comment(3, "text3")
+                )
             ),
             Book(
                 id = 2,
                 name = "book2",
                 authors = mutableListOf(
                     Author(2, "author2"),
-                    Author(3, "author3")
+                    Author(1, "author1")
                 ),
-                gener = Genre(2, "gener2")
+                comments = mutableListOf(
+                    Comment(2, "text2")
+                )
             )
         )
 
@@ -89,7 +82,7 @@ class BookDaoImplTest(
     }
 
     @Test
-    @DisplayName("Создание книги")
+    @DisplayName("Обновление книги")
     fun updateBook() {
         val book = Book(
             id = 2,
@@ -97,8 +90,7 @@ class BookDaoImplTest(
             authors = mutableListOf(
                 Author(2, "author2"),
                 Author(3, "author3")
-            ),
-            gener = Genre(2, "gener2")
+            )
         )
 
         bookDao.updateBook(book)
@@ -108,8 +100,7 @@ class BookDaoImplTest(
             Book(
                 id = 1,
                 name = "book1",
-                authors = mutableListOf(Author(1, "author1")),
-                gener = Genre(1, "gener1")
+                authors = mutableListOf(Author(1, "author1"))
             ),
             Book(
                 id = 2,
@@ -117,8 +108,7 @@ class BookDaoImplTest(
                 authors = mutableListOf(
                     Author(2, "author2"),
                     Author(3, "author3")
-                ),
-                gener = Genre(2, "gener2")
+                )
             )
         )
 

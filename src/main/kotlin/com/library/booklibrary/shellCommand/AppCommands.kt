@@ -25,19 +25,19 @@ class AppCommands(
     }
 
     @ShellMethod(value = "Get all Books", key = ["ga", "get all"])
-    fun getAllBooks(): List<BookDto>? {
-        return bookService.getAllBooks()
+    fun getAllBooks() {
+         bookService.getAllBooks()?.map { outputConsoleService.outputBook(it) }
     }
 
     @ShellMethod(value = "Get book by id", key = ["gb", "get book"])
-    fun getBookById(id: Long): BookDto? {
-        return bookService.findBookById(id)
+    fun getBookById(id: Long) {
+         bookService.findBookById(id)?.let { outputConsoleService.outputBook(it) }
     }
 
     @ShellMethod(value = "Save book", key = ["s", "save book"])
     fun insertBook(name: String) {
         bookService.saveBook(BookDto(name = name))
-            .let { println("Добавлена книга с id = ${it.id}") }
+            .let { outputConsoleService.outputBook(it) }
     }
 
     @ShellMethod(value = "Update book", key = ["u", "update book"])

@@ -11,7 +11,7 @@ class Comment(
     val id: Long? = null,
 
     @Column(name = "text")
-    var text: String? = null,
+    var text: String? = null
 )
 
 fun Comment.commentToCommentDto() =

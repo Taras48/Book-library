@@ -1,9 +1,21 @@
-insert into books (`name`) values ('book1');
-insert into books (`name`) values ('book2');
---
-insert into geners (`name`, `book_id`) values ('gener1',  ( SELECT id FROM books WHERE id = 1 ));
-insert into geners (`name`, `book_id`) values ('gener2',  ( SELECT id FROM books WHERE id = 2 ));
+insert into genres(`name`)
+values ('gener1'),
+       ('gener2');
 
-insert into authors (`name`, `book_id`) values ('author1',  ( SELECT id FROM geners WHERE id = 1 ));
-insert into authors (`name`, `book_id`) values ('author2',  ( SELECT id FROM geners WHERE id = 2 ));
-insert into authors (`name`, `book_id`) values ('author3',  ( SELECT id FROM geners WHERE id = 2 ));
+insert into books (`name`, `genre_id`)
+values ('book1', 1),
+       ('book2', 2);
+
+insert into authors (`sur_name`)
+values ('author1'),
+       ('author2');
+
+insert into author_books (`author_id`, `book_id`)
+values (1, 1),
+       (2, 2),
+       (2, 1);
+
+insert into comments (`text`, `book_id`)
+values ('text1', 1),
+       ('text2', 2),
+       ('text3', 1);

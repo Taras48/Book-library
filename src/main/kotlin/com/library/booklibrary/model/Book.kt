@@ -16,17 +16,24 @@ class Book(
     @Column(name = "name")
     val name: String,
 
-    @OneToMany(targetEntity = Comment::class, cascade = [CascadeType.ALL])
+    @OneToMany(
+        targetEntity = Comment::class,
+        cascade = [CascadeType.ALL],
+        orphanRemoval = true,
+
+    )
     @JoinColumn(name = "book_id")
     @Fetch(FetchMode.SUBSELECT)
     var comments: MutableList<Comment> = mutableListOf(),
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
-    @JoinTable(name = "author_books",
+    @JoinTable(
+        name = "author_books",
         joinColumns = [JoinColumn(name = "author_id")],
-        inverseJoinColumns = [JoinColumn(name = "book_id")])
+        inverseJoinColumns = [JoinColumn(name = "book_id")]
+    )
     @JsonIgnoreProperties("books")
-    var authors: MutableList<Author> = mutableListOf()
+    var authors: MutableList<Author> = mutableListOf(),
 )
 
 fun Book.bookToBookDto() =
@@ -34,7 +41,7 @@ fun Book.bookToBookDto() =
         this.id,
         this.name,
         this.authors.map { it.authorToAuthorDto() }.toMutableList(),
-        this.comments.map { it.commentToCommentDto()}.toMutableList()
+        this.comments.map { it.commentToCommentDto() }.toMutableList()
     )
 
 

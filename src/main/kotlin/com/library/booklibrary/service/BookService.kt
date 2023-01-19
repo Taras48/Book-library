@@ -41,5 +41,5 @@ interface BookService {
      * @param book  книга
      * @return книга
      */
-    fun saveBook(book: BookDto): Book
+    fun saveBook(book: BookDto): BookDto
 }
