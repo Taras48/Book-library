@@ -14,7 +14,7 @@ class OutputConsoleServiceImpl : OutputConsoleService{
             Genre books names: ${genre.books.map { it.id to it.name }}
         """.trimIndent())
 
-    override fun outputCommen(commen: CommentDto) =
+    override fun outputComment(commen: CommentDto) =
         println("""
             Comment text: ${commen.text}
         """.trimIndent())

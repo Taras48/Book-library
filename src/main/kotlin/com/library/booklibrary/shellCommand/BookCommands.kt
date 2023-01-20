@@ -9,7 +9,7 @@ import org.springframework.shell.standard.ShellMethod
 
 
 @ShellComponent
-class AppCommands(
+class BookCommands(
     private val bookService: BookService,
     private val outputConsoleService: OutputConsoleService
 ) {

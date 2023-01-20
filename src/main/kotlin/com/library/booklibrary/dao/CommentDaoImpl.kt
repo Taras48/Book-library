@@ -22,7 +22,7 @@ class CommentDaoImpl(
             .setParameter("id", id)
             .executeUpdate()
 
-    override fun updateComment(comment: Comment) =
+    override fun updateCommentTextById(id: Long, text: String) =
         em.createQuery(
             """
             update Comment c
@@ -30,12 +30,12 @@ class CommentDaoImpl(
                 where c.id = :id
                 """
         )
-            .setParameter("text", comment.text)
-            .setParameter("id", comment.id)
+            .setParameter("text", text)
+            .setParameter("id", id)
             .executeUpdate()
 
     override fun saveComment(comment: Comment) =
-        if (comment.id?.equals(0) == true) {
+        if (comment.id == null) {
             em.persist(comment)
             comment
         } else {

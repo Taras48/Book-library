@@ -1,45 +1,45 @@
-package com.library.Commentlibrary.dao
+package com.library.Commentlibrary.service
 
-import com.library.booklibrary.model.Comment
+import com.library.booklibrary.dto.CommentDto
 
-interface CommentDao {
-
+interface CommentService {
     /**
      * Получение комментария по id
      *
      * @param id  идентификатор комментария
-     * @return книга
+     * @return комментарий
      */
-    fun findCommentById(id: Long): Comment?
+    fun findCommentById(id: Long): CommentDto?
 
     /**
      * Получение всех комментариев
      *
      * @return все комментарии
      */
-    fun getAllComments(): List<Comment>?
+    fun getAllComments(): List<CommentDto>?
 
     /**
      * Удаление комментария по id
      *
      * @param id  идентификатор комментария
-     * @return  количество удаленных строк
+     * @return  количество удаленных комментариев
      */
     fun deleteCommentById(id: Long): Int
 
     /**
      * Обновление комментария
      *
-     * @param comment  комментарий
+     * @param id     идентификатор комментария
+     * @param text   текст комментария
      * @return количество измененных строк
      */
-    fun updateCommentTextById(id: Long, text: String): Int
+    fun updateCommentTextById( id: Long, text: String): Int
 
     /**
      * Создание комментария
      *
      * @param comment  комментария
-     * @return комментария
+     * @return книга
      */
-    fun saveComment(comment: Comment): Comment
+    fun saveComment(comment: CommentDto): CommentDto
 }

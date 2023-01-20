@@ -7,7 +7,7 @@ import com.library.booklibrary.dto.GenreDto
 
 interface OutputConsoleService {
     fun outputGenre(genre:GenreDto)
-    fun outputCommen(commen: CommentDto)
+    fun outputComment(commen: CommentDto)
     fun outputBook(book: BookDto)
     fun outputAuthor(author: AuthorDto)
 }
