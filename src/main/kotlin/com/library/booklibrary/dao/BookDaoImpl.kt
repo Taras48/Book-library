@@ -1,16 +1,14 @@
 package com.library.booklibrary.dao
 
-import com.library.booklibrary.model.Author
 import com.library.booklibrary.model.Book
-import org.springframework.jdbc.core.ResultSetExtractor
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 @Repository
-class BookDaoImpl(): BookDao {
-    @PersistenceContext private lateinit var em: EntityManager
+class BookDaoImpl() : BookDao {
+    @PersistenceContext
+    private lateinit var em: EntityManager
     override fun findBookById(id: Long) =
         em.find(Book::class.java, id)
 
@@ -31,20 +29,16 @@ class BookDaoImpl(): BookDao {
             em.merge(book)
         }
 
-    override fun updateBook(book: Book)=
+    override fun updateBookNameById(id: Long, name: String) =
         em.createQuery(
             """
             update Book b
-                set b.name = :name, 
-                b.authors = :authors,
-                b.comments = :comments
+                set b.name = :name
                 where b.id = :id
                 """
         )
-            .setParameter("name", book.name)
-            .setParameter("authors", book.authors)
-            .setParameter("comments", book.comments)
-            .setParameter("id", book.id)
+            .setParameter("name", name)
+            .setParameter("id", id)
             .executeUpdate()
 
 }

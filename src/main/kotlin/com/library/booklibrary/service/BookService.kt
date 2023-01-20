@@ -33,7 +33,7 @@ interface BookService {
      * @param book  книга
      * @return количество измененных строк
      */
-    fun updateBook(book: BookDto): Int
+    fun updateBookNameById(id: Long, name: String): Int
 
     /**
      * Создание книги

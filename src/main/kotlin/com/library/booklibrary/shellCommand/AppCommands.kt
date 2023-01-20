@@ -41,7 +41,7 @@ class AppCommands(
     }
 
     @ShellMethod(value = "Update book", key = ["u", "update book"])
-    fun updateBook(id: Long, name: String) {
-        bookService.updateBook(BookDto(id = id, name = name))
+    fun updateBookNameById(id: Long, name: String) {
+        bookService.updateBookNameById(id, name)
     }
 }

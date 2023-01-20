@@ -5,6 +5,7 @@ spring:
     init:
       mode: always
       data-locations: data.sql
+      schema: schema.sql
 
   jpa:
     generate-ddl: true

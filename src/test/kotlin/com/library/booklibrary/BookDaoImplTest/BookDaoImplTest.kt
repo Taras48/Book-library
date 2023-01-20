@@ -3,7 +3,8 @@ package com.library.booklibrary.BookDaoImplTest
 import com.library.booklibrary.dao.BookDaoImpl
 import com.library.booklibrary.model.Author
 import com.library.booklibrary.model.Book
-import com.library.booklibrary.model.Comment
+import org.assertj.core.api.Assertions.assertThat
+import org.hibernate.SessionFactory
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
 import org.springframework.context.annotation.Import
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 @DataJpaTest
 @Import(BookDaoImpl::class)
@@ -21,6 +23,7 @@ class BookDaoImplTest() {
 
     @Autowired
     private lateinit var em: TestEntityManager
+
     @Test
     @DisplayName("Получение книги по id")
     fun findBookById() {
@@ -37,7 +40,9 @@ class BookDaoImplTest() {
         em.detach(book)
 
         val actual = bookDao.deleteBookById(1L)
+        val deletedBook = em.find(Book::class.java, 1L)
 
+        assertNull(deletedBook)
         assertEquals(1, actual)
     }
 
@@ -53,66 +58,28 @@ class BookDaoImplTest() {
     @Test
     @DisplayName("Получение всех книг")
     fun getAllBooks() {
+        val sessionFactory = em.entityManager.entityManagerFactory.unwrap(SessionFactory::class.java)
+        sessionFactory.statistics.isStatisticsEnabled = true
+
         val books = bookDao.getAllBooks()
 
-        val expected = listOf(
-            Book(
-                id = 1,
-                name = "book1",
-                authors = mutableListOf(Author(1, "author1")),
-                comments = mutableListOf(
-                    Comment(1, "text1"),
-                    Comment(3, "text3")
-                )
-            ),
-            Book(
-                id = 2,
-                name = "book2",
-                authors = mutableListOf(
-                    Author(2, "author2"),
-                    Author(1, "author1")
-                ),
-                comments = mutableListOf(
-                    Comment(2, "text2")
-                )
-            )
-        )
+        assertThat(books).isNotNull()
+            .hasSize(2)
+            .allMatch { s -> s.name != "" }
+            .allMatch { s -> s.authors.size > 0 }
+            .allMatch { s -> s.comments.size > 0 }
 
-        assertEquals(expected, books)
+        assertThat(sessionFactory.statistics.prepareStatementCount).isEqualTo(3)
     }
 
     @Test
     @DisplayName("Обновление книги")
-    fun updateBook() {
-        val book = Book(
-            id = 2,
-            name = "book3",
-            authors = mutableListOf(
-                Author(2, "author2"),
-                Author(3, "author3")
-            )
-        )
+    fun updateBookNameById() {
+        val actual = bookDao.updateBookNameById(2, "book3")
+        val actualBook = bookDao.findBookById(2)
 
-        bookDao.updateBook(book)
-        val books = bookDao.getAllBooks()
-
-        val expected = listOf(
-            Book(
-                id = 1,
-                name = "book1",
-                authors = mutableListOf(Author(1, "author1"))
-            ),
-            Book(
-                id = 2,
-                name = "book3",
-                authors = mutableListOf(
-                    Author(2, "author2"),
-                    Author(3, "author3")
-                )
-            )
-        )
-
-        assertEquals(expected, books)
+        assertEquals("book3", actualBook.name)
+        assertEquals(1, actual)
     }
 
 }

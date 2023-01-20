@@ -32,7 +32,7 @@ class Book(
         joinColumns = [JoinColumn(name = "author_id")],
         inverseJoinColumns = [JoinColumn(name = "book_id")]
     )
-    @JsonIgnoreProperties("books")
+    @Fetch(FetchMode.SUBSELECT)
     var authors: MutableList<Author> = mutableListOf(),
 )
 
