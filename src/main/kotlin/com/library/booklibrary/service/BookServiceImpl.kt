@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class BookServiceImpl(
-    val bookDao: BookDao,
+    private val bookDao: BookDao,
 ) : BookService {
     override fun findBookById(id: Long) =
         bookDao.findBookById(id)?.bookToBookDto()

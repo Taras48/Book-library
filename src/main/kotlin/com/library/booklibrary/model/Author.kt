@@ -10,7 +10,7 @@ import javax.persistence.*
 class Author(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long?,
 
     @Column(name = "sur_name")
     val name: String?
