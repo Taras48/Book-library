@@ -14,17 +14,17 @@ class BookCommands(
     private val outputConsoleService: OutputConsoleService
 ) {
 
-    @ShellMethod(key = ["db"])
-    fun getDb() {
-        Console.main()
-    }
+//    @ShellMethod(key = ["db"])
+//    fun getDb() {
+//        Console.main()
+//    }
 
-    @ShellMethod(value = "Delete Book by Id", key = ["d", "delete"])
+    @ShellMethod(value = "Delete Book by Id", key = ["db", "delete"])
     fun deleteBookById(id: Long) {
         bookService.deleteBookById(id)
     }
 
-    @ShellMethod(value = "Get all Books", key = ["ga", "get all"])
+    @ShellMethod(value = "Get all Books", key = ["gab", "get all"])
     fun getAllBooks() {
          bookService.getAllBooks()?.map { outputConsoleService.outputBook(it) }
     }
@@ -34,13 +34,13 @@ class BookCommands(
          bookService.findBookById(id)?.let { outputConsoleService.outputBook(it) }
     }
 
-    @ShellMethod(value = "Save book", key = ["s", "save book"])
+    @ShellMethod(value = "Save book", key = ["sb", "save book"])
     fun insertBook(name: String) {
         bookService.saveBook(BookDto(name = name))
             .let { outputConsoleService.outputBook(it) }
     }
 
-    @ShellMethod(value = "Update book", key = ["u", "update book"])
+    @ShellMethod(value = "Update book", key = ["ub", "update book"])
     fun updateBookNameById(id: Long, name: String) {
         bookService.updateBookNameById(id, name)
     }
