@@ -10,7 +10,7 @@ import javax.persistence.*
 data class Genre(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    var id: Long?,
 
     @Column(name = "name")
     val name: String,

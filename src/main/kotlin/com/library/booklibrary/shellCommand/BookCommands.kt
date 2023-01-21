@@ -14,11 +14,6 @@ class BookCommands(
     private val outputConsoleService: OutputConsoleService
 ) {
 
-//    @ShellMethod(key = ["db"])
-//    fun getDb() {
-//        Console.main()
-//    }
-
     @ShellMethod(value = "Delete Book by Id", key = ["db", "delete"])
     fun deleteBookById(id: Long) {
         bookService.deleteBookById(id)
