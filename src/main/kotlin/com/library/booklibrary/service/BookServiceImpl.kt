@@ -2,13 +2,11 @@ package com.library.booklibrary.service
 
 import com.library.booklibrary.dao.BookDao
 import com.library.booklibrary.dto.BookDto
-import com.library.booklibrary.dto.bookDtoToBook
-import com.library.booklibrary.model.bookToBookDto
+import com.library.booklibrary.extensions.bookDtoToBook
+import com.library.booklibrary.extensions.bookToBookDto
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional
 class BookServiceImpl(
     private val bookDao: BookDao,
 ) : BookService {

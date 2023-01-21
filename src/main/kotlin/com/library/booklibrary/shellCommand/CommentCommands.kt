@@ -22,6 +22,11 @@ class CommentCommands(
         commentService.getAllComments()?.map { outputConsoleService.outputComment(it) }
     }
 
+    @ShellMethod(value = "Get all Comments by Book Id", key = ["gacBybId", "get cooments by b id"])
+    fun getCommentsByBookId(id: Long) {
+        commentService.getCommentsByBookId(id)?.map { outputConsoleService.outputComment(it) }
+    }
+
     @ShellMethod(value = "Get Comment by id", key = ["gb", "get Comment"])
     fun getCommentById(id: Long) {
         commentService.findCommentById(id)?.let { outputConsoleService.outputComment(it) }

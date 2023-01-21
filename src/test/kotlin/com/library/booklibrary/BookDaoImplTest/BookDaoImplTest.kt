@@ -66,6 +66,7 @@ class BookDaoImplTest() {
         assertThat(books).isNotNull()
             .hasSize(2)
             .allMatch { s -> s.name != "" }
+            .allMatch { s -> s.gener?.name != null && s.gener?.name != "" }
             .allMatch { s -> s.authors.size > 0 }
             .allMatch { s -> s.comments.size > 0 }
 

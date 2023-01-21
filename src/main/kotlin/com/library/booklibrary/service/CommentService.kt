@@ -19,6 +19,13 @@ interface CommentService {
     fun getAllComments(): List<CommentDto>?
 
     /**
+     * Получение всех комментариев по id книги
+     *
+     * @return комментарии
+     */
+    fun getCommentsByBookId(id:Long): List<CommentDto>?
+
+    /**
      * Удаление комментария по id
      *
      * @param id  идентификатор комментария

@@ -7,8 +7,3 @@ data class AuthorDto(
     val name: String?
 )
 
-fun AuthorDto.authorDtoToAuthor() =
-    Author(
-        this.id,
-        this.name
-    )

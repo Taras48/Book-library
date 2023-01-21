@@ -2,8 +2,8 @@ package com.library.booklibrary.service
 
 import com.library.booklibrary.dao.GenreDao
 import com.library.booklibrary.dto.GenreDto
-import com.library.booklibrary.dto.genreDtoToGenre
-import com.library.booklibrary.model.genreToGenreDto
+import com.library.booklibrary.extensions.genreDtoToGenre
+import com.library.booklibrary.extensions.genreToGenreDto
 import org.springframework.stereotype.Service
 
 @Service

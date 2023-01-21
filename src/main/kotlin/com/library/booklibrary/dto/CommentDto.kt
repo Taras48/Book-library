@@ -7,8 +7,3 @@ data class CommentDto(
     val text: String? = null
 )
 
-fun CommentDto.commentDtoToComment() =
-    Comment(
-        this.id,
-        this.text,
-    )

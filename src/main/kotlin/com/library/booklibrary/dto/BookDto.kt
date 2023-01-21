@@ -7,12 +7,5 @@ data class BookDto(
     val name: String,
     val authors: MutableList<AuthorDto> = mutableListOf(),
     val comments: MutableList<CommentDto> = mutableListOf(),
+    var gener: GenreDto? = null
 )
-
-fun BookDto.bookDtoToBook() =
-    Book(
-        this.id,
-        this.name,
-        this.comments.map { it.commentDtoToComment() }.toMutableList(),
-        this.authors.map { it.authorDtoToAuthor() }.toMutableList()
-    )

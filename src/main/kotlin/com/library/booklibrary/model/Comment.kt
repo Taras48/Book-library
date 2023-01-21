@@ -14,8 +14,3 @@ class Comment(
     var text: String? = null
 )
 
-fun Comment.commentToCommentDto() =
-    CommentDto(
-        this.id,
-        this.text,
-    )

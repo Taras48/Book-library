@@ -13,7 +13,13 @@ class BookDaoImpl() : BookDao {
         em.find(Book::class.java, id)
 
     override fun getAllBooks() =
-        em.createQuery("select b from Book b", Book::class.java)
+        em.createQuery(
+            """
+            select b 
+            from Book b
+            join fetch b.gener 
+            """.trimIndent(), Book::class.java
+        )
             .resultList
 
     override fun deleteBookById(id: Long) =

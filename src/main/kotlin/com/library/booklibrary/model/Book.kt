@@ -34,14 +34,10 @@ class Book(
     )
     @Fetch(FetchMode.SUBSELECT)
     var authors: MutableList<Author> = mutableListOf(),
-)
 
-fun Book.bookToBookDto() =
-    BookDto(
-        this.id,
-        this.name,
-        this.authors.map { it.authorToAuthorDto() }.toMutableList(),
-        this.comments.map { it.commentToCommentDto() }.toMutableList()
-    )
+    @ManyToOne(targetEntity = Genre::class, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn (name="genre_id")
+    var gener: Genre? = null
+)
 
 

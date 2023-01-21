@@ -15,15 +15,8 @@ data class Genre(
     @Column(name = "name")
     val name: String,
 
-    @OneToMany(targetEntity = Book::class, cascade = [CascadeType.ALL])
-    @JoinColumn(name = "genre_id")
+    @OneToMany(targetEntity = Book::class)
     @Fetch(FetchMode.SUBSELECT)
     var books: MutableList<Book> = mutableListOf()
 )
 
-
-fun Genre.genreToGenreDto() =
-    GenreDto(
-        this.id,
-        this.name
-    )

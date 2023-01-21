@@ -14,11 +14,6 @@ class AuthorCommands(
     private val outputConsoleService: OutputConsoleService,
 ) {
 
-//    @ShellMethod(key = ["db"])
-//    fun getDb() {
-//        Console.main()
-//    }
-
     @ShellMethod(value = "Delete Author by Id", key = ["da", "delete"])
     fun deleteAuthorById(id: Long) {
         authorService.deleteAuthorById(id)

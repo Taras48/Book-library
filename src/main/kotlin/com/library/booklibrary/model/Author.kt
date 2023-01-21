@@ -15,10 +15,3 @@ class Author(
     @Column(name = "sur_name")
     val name: String?
 )
-
-
-fun Author.authorToAuthorDto() =
-    AuthorDto(
-        this.id,
-        this.name
-    )

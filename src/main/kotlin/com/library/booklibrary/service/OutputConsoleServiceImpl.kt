@@ -11,7 +11,6 @@ class OutputConsoleServiceImpl : OutputConsoleService{
     override fun outputGenre(genre: GenreDto) =
         println("""
             Genre Name: $genre.name
-            Genre books names: ${genre.books.map { it.id to it.name }}
         """.trimIndent())
 
     override fun outputComment(commen: CommentDto) =
@@ -24,6 +23,7 @@ class OutputConsoleServiceImpl : OutputConsoleService{
             Book Name: ${book.name}
             Book authors: ${book.authors.map { it.id to it.name }}
             Book comments: ${book.comments.map { it.id to it.text }}
+            Book genre: ${book.gener?.name}
         """.trimIndent())
 
     override fun outputAuthor(author: AuthorDto)=

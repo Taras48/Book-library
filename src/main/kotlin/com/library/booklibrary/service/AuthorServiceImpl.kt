@@ -2,13 +2,11 @@ package com.library.booklibrary.service
 
 import com.library.Authorlibrary.dao.AuthorDao
 import com.library.booklibrary.dto.AuthorDto
-import com.library.booklibrary.dto.authorDtoToAuthor
-import com.library.booklibrary.model.authorToAuthorDto
+import com.library.booklibrary.extensions.authorDtoToAuthor
+import com.library.booklibrary.extensions.authorToAuthorDto
 import org.springframework.stereotype.Service
-import javax.transaction.Transactional
 
 @Service
-@Transactional
 class AuthorServiceImpl(
     private val authorDao: AuthorDao,
 ) : AuthorService {
