@@ -5,25 +5,26 @@ import com.library.booklibrary.dto.AuthorDto
 import com.library.booklibrary.extensions.authorDtoToAuthor
 import com.library.booklibrary.extensions.authorToAuthorDto
 import org.springframework.stereotype.Service
+import kotlin.jvm.optionals.toList
 
 @Service
 class AuthorServiceImpl(
-    private val authorDao: AuthorDao,
+    val authorDao: AuthorDao,
 ) : AuthorService {
     override fun findAuthorById(id: Long) =
-        authorDao.findAuthorById(id)
-            ?.authorToAuthorDto()
+        authorDao.findById(id).get().authorToAuthorDto()
+
 
     override fun getAllAuthors() =
-        authorDao.getAllAuthors()
-            ?.map { it.authorToAuthorDto() }
+        authorDao.findAll()
+            .map { it.authorToAuthorDto() }
 
     override fun deleteAuthorById(id: Long) =
-        authorDao.deleteAuthorById(id)
+        authorDao.deleteById(id)
 
     override fun updateAuthorNameById(id: Long, name: String) =
-        authorDao.updateAuthorNameById(id, name)
+        authorDao.updateNameById(id, name)
 
     override fun saveAuthor(author: AuthorDto) =
-        authorDao.saveAuthor(author.authorDtoToAuthor()).authorToAuthorDto()
+        authorDao.save(author.authorDtoToAuthor()).authorToAuthorDto()
 }

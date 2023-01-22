@@ -11,19 +11,19 @@ class GenreServiceImpl(
     private val genreDao: GenreDao,
 ) : GenreService {
     override fun findGenreById(id: Long) =
-        genreDao.findGenreById(id)
-            ?.genreToGenreDto()
+        genreDao.findById(id).get()
+            .genreToGenreDto()
 
     override fun getAllGenres() =
-        genreDao.getAllGenres()
-            ?.map { it.genreToGenreDto() }
+        genreDao.findAll()
+            .map { it.genreToGenreDto() }
 
     override fun deleteGenreById(id: Long) =
-        genreDao.deleteGenreById(id)
+        genreDao.deleteById(id)
 
     override fun updateGenreNameById(id: Long, name: String) =
-        genreDao.updateGenreNameById(id, name)
+        genreDao.updateNameById(id, name)
 
     override fun saveGenre(genre: GenreDto) =
-        genreDao.saveGenre(genre.genreDtoToGenre()).genreToGenreDto()
+        genreDao.save(genre.genreDtoToGenre()).genreToGenreDto()
 }

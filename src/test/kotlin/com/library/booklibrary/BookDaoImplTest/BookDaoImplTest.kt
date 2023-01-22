@@ -1,7 +1,6 @@
 package com.library.booklibrary.BookDaoImplTest
 
-import com.library.booklibrary.dao.BookDaoImpl
-import com.library.booklibrary.model.Author
+import com.library.booklibrary.dao.BookDao
 import com.library.booklibrary.model.Book
 import org.assertj.core.api.Assertions.assertThat
 import org.hibernate.SessionFactory
@@ -15,11 +14,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 @DataJpaTest
-@Import(BookDaoImpl::class)
 class BookDaoImplTest() {
 
     @Autowired
-    private lateinit var bookDao: BookDaoImpl
+    private lateinit var bookDao: BookDao
 
     @Autowired
     private lateinit var em: TestEntityManager
@@ -27,7 +25,7 @@ class BookDaoImplTest() {
     @Test
     @DisplayName("Получение книги по id")
     fun findBookById() {
-        val book = bookDao.findBookById(1)
+        val book = bookDao.findById(1).get()
         val expected = em.find(Book::class.java, 1L)
 
         assertEquals(expected, book)
@@ -39,17 +37,16 @@ class BookDaoImplTest() {
         val book = em.find(Book::class.java, 1L)
         em.detach(book)
 
-        val actual = bookDao.deleteBookById(1L)
+        val actual = bookDao.deleteById(1L)
         val deletedBook = em.find(Book::class.java, 1L)
 
         assertNull(deletedBook)
-        assertEquals(1, actual)
     }
 
     @Test
     @DisplayName("Создание книги")
     fun saveBook() {
-        val book = bookDao.saveBook(Book(name = "test"))
+        val book = bookDao.save(Book(name = "test"))
         val expected = em.find(Book::class.java, 3L)
 
         assertEquals(expected, book)
@@ -61,7 +58,7 @@ class BookDaoImplTest() {
         val sessionFactory = em.entityManager.entityManagerFactory.unwrap(SessionFactory::class.java)
         sessionFactory.statistics.isStatisticsEnabled = true
 
-        val books = bookDao.getAllBooks()
+        val books = bookDao.findAll()
 
         assertThat(books).isNotNull()
             .hasSize(2)
@@ -76,11 +73,10 @@ class BookDaoImplTest() {
     @Test
     @DisplayName("Обновление книги")
     fun updateBookNameById() {
-        val actual = bookDao.updateBookNameById(2, "book3")
-        val actualBook = bookDao.findBookById(2)
+        val actual = bookDao.updateNameById(2, "book3")
+        val actualBook = bookDao.findById(2).get()
 
         assertEquals("book3", actualBook.name)
-        assertEquals(1, actual)
     }
 
 }

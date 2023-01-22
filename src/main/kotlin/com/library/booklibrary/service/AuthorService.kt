@@ -22,17 +22,17 @@ interface AuthorService {
      * Удаление автора по id
      *
      * @param id  идентификатор автора
-     * @return  количество удаленных строк
+     *
      */
-    fun deleteAuthorById(id: Long): Int
+    fun deleteAuthorById(id: Long)
 
     /**
      * Обновление автора
      *
      * @param author  автора
-     * @return количество измененных строк
+     *
      */
-    fun updateAuthorNameById(id: Long, name: String): Int
+    fun updateAuthorNameById(id: Long, name: String)
 
     /**
      * Создание автора

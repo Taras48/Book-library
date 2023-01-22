@@ -1,45 +1,14 @@
 package com.library.Commentlibrary.dao
 
 import com.library.booklibrary.model.Comment
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 
-interface CommentDao {
+interface CommentDao : JpaRepository<Comment, Long>{
 
-    /**
-     * Получение комментария по id
-     *
-     * @param id  идентификатор комментария
-     * @return книга
-     */
-    fun findCommentById(id: Long): Comment?
-
-    /**
-     * Получение всех комментариев
-     *
-     * @return все комментарии
-     */
-    fun getAllComments(): List<Comment>?
-
-    /**
-     * Удаление комментария по id
-     *
-     * @param id  идентификатор комментария
-     * @return  количество удаленных строк
-     */
-    fun deleteCommentById(id: Long): Int
-
-    /**
-     * Обновление комментария
-     *
-     * @param comment  комментарий
-     * @return количество измененных строк
-     */
-    fun updateCommentTextById(id: Long, text: String): Int
-
-    /**
-     * Создание комментария
-     *
-     * @param comment  комментария
-     * @return комментария
-     */
-    fun saveComment(comment: Comment): Comment
+    @Modifying
+    @Query("update Comment c set c.text = :name where c.id = :id")
+    fun updateTextById(@Param("id") id: Long, @Param("text") text: String)
 }

@@ -11,18 +11,18 @@ class BookServiceImpl(
     private val bookDao: BookDao,
 ) : BookService {
     override fun findBookById(id: Long) =
-        bookDao.findBookById(id)?.bookToBookDto()
+        bookDao.findById(id).get().bookToBookDto()
 
     override fun getAllBooks() =
-        bookDao.getAllBooks()?.map { it.bookToBookDto() }
+        bookDao.findAll().map { it.bookToBookDto() }
 
     override fun deleteBookById(id: Long) =
-        bookDao.deleteBookById(id)
+        bookDao.deleteById(id)
 
     override fun updateBookNameById(id: Long, name: String) =
-        bookDao.updateBookNameById(id, name)
+        bookDao.updateNameById(id, name)
 
     override fun saveBook(book: BookDto) =
-        bookDao.saveBook(book.bookDtoToBook())
+        bookDao.save(book.bookDtoToBook())
             .bookToBookDto()
 }

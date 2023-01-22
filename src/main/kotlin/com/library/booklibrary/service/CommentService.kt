@@ -29,18 +29,18 @@ interface CommentService {
      * Удаление комментария по id
      *
      * @param id  идентификатор комментария
-     * @return  количество удаленных комментариев
+     *
      */
-    fun deleteCommentById(id: Long): Int
+    fun deleteCommentById(id: Long)
 
     /**
      * Обновление комментария
      *
      * @param id     идентификатор комментария
      * @param text   текст комментария
-     * @return количество измененных строк
+     *
      */
-    fun updateCommentTextById( id: Long, text: String): Int
+    fun updateCommentTextById( id: Long, text: String)
 
     /**
      * Создание комментария

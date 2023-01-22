@@ -23,17 +23,17 @@ interface GenreService {
      * Удаление жанра по id
      *
      * @param id  идентификатор жанра
-     * @return  количество удаленных строк
+     *
      */
-    fun deleteGenreById(id: Long): Int
+    fun deleteGenreById(id: Long)
 
     /**
      * Обновление жанра
      *
      * @param genre  жанра
-     * @return количество измененных строк
+     *
      */
-    fun updateGenreNameById(id: Long, name: String): Int
+    fun updateGenreNameById(id: Long, name: String)
 
     /**
      * Создание жанра

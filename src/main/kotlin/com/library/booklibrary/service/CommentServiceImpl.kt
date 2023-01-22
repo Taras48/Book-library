@@ -13,23 +13,23 @@ class CommentServiceImpl(
     private val bookService: BookService,
 ) : CommentService {
     override fun findCommentById(id: Long) =
-        commentDao.findCommentById(id)
-            ?.commentToCommentDto()
+        commentDao.findById(id).get()
+            .commentToCommentDto()
 
     override fun getAllComments() =
-        commentDao.getAllComments()
-            ?.map { it.commentToCommentDto() }
+        commentDao.findAll()
+            .map { it.commentToCommentDto() }
 
     override fun getCommentsByBookId(id: Long) =
         bookService.findBookById(id)?.comments
 
     override fun deleteCommentById(id: Long) =
-        commentDao.deleteCommentById(id)
+        commentDao.deleteById(id)
 
     override fun updateCommentTextById(id: Long, text: String) =
-        commentDao.updateCommentTextById(id, text)
+        commentDao.updateTextById(id, text)
 
     override fun saveComment(comment: CommentDto) =
-        commentDao.saveComment(comment.commentDtoToComment())
+        commentDao.save(comment.commentDtoToComment())
             .commentToCommentDto()
 }
