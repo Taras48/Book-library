@@ -22,9 +22,9 @@ interface GenreDao {
      * Удаление жанра по id
      *
      * @param id  идентификатор жанра
-     * @return  количество удаленных строк
+     *
      */
-    fun deleteGenreById(id: Long): Int
+    fun deleteGenreById(genre: Genre)
 
     /**
      * Обновление жанра

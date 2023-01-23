@@ -13,8 +13,8 @@ class CommentCommands(
 ) {
 
     @ShellMethod(value = "Delete Comment by Id", key = ["dc", "delete"])
-    fun deleteCommentById(id: Long) {
-        commentService.deleteCommentById(id)
+    fun deleteCommentById(id: Long, text: String) {
+        commentService.deleteCommentById(CommentDto(id = id, text = text))
     }
 
     @ShellMethod(value = "Get all Comments", key = ["gac", "get all"])

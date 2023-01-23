@@ -3,7 +3,6 @@ package com.library.booklibrary.shellCommand
 import com.library.booklibrary.dto.BookDto
 import com.library.booklibrary.service.BookService
 import com.library.booklibrary.service.OutputConsoleService
-import org.h2.tools.Console
 import org.springframework.shell.standard.ShellComponent
 import org.springframework.shell.standard.ShellMethod
 
@@ -11,22 +10,22 @@ import org.springframework.shell.standard.ShellMethod
 @ShellComponent
 class BookCommands(
     private val bookService: BookService,
-    private val outputConsoleService: OutputConsoleService
+    private val outputConsoleService: OutputConsoleService,
 ) {
 
     @ShellMethod(value = "Delete Book by Id", key = ["db", "delete"])
-    fun deleteBookById(id: Long) {
-        bookService.deleteBookById(id)
+    fun deleteBookById(id: Long, name: String) {
+        bookService.deleteBookById(BookDto(id = id, name = name))
     }
 
     @ShellMethod(value = "Get all Books", key = ["gab", "get all"])
     fun getAllBooks() {
-         bookService.getAllBooks()?.map { outputConsoleService.outputBook(it) }
+        bookService.getAllBooks()?.map { outputConsoleService.outputBook(it) }
     }
 
     @ShellMethod(value = "Get book by id", key = ["gb", "get book"])
     fun getBookById(id: Long) {
-         bookService.findBookById(id)?.let { outputConsoleService.outputBook(it) }
+        bookService.findBookById(id)?.let { outputConsoleService.outputBook(it) }
     }
 
     @ShellMethod(value = "Save book", key = ["sb", "save book"])

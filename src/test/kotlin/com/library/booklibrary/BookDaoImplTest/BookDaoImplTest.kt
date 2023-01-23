@@ -37,13 +37,11 @@ class BookDaoImplTest() {
     @DisplayName("Удаление книги по id")
     fun deleteBookById() {
         val book = em.find(Book::class.java, 1L)
-        em.detach(book)
 
-        val actual = bookDao.deleteBookById(1L)
+        val actual = bookDao.deleteBookById(book)
         val deletedBook = em.find(Book::class.java, 1L)
 
         assertNull(deletedBook)
-        assertEquals(1, actual)
     }
 
     @Test

@@ -17,6 +17,7 @@ class Book(
     val name: String,
 
     @OneToMany(
+        fetch = FetchType.EAGER,
         targetEntity = Comment::class,
         cascade = [CascadeType.ALL],
         orphanRemoval = true,
@@ -26,7 +27,7 @@ class Book(
     @Fetch(FetchMode.SUBSELECT)
     var comments: MutableList<Comment> = mutableListOf(),
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+    @ManyToMany( cascade = [CascadeType.PERSIST])
     @JoinTable(
         name = "author_books",
         joinColumns = [JoinColumn(name = "author_id")],

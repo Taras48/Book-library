@@ -4,6 +4,7 @@ import com.library.Authorlibrary.dao.AuthorDao
 import com.library.booklibrary.dto.AuthorDto
 import com.library.booklibrary.extensions.authorDtoToAuthor
 import com.library.booklibrary.extensions.authorToAuthorDto
+import com.library.booklibrary.model.Author
 import org.springframework.stereotype.Service
 
 @Service
@@ -18,8 +19,8 @@ class AuthorServiceImpl(
         authorDao.getAllAuthors()
             ?.map { it.authorToAuthorDto() }
 
-    override fun deleteAuthorById(id: Long) =
-        authorDao.deleteAuthorById(id)
+    override fun deleteAuthorById(author: AuthorDto) =
+        authorDao.deleteAuthorById(author.authorDtoToAuthor())
 
     override fun updateAuthorNameById(id: Long, name: String) =
         authorDao.updateAuthorNameById(id, name)

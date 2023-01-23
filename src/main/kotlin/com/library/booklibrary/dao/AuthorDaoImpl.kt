@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
-@Repository
+@Component
 class AuthorDaoImpl(
     @PersistenceContext private val em: EntityManager,
 ) : AuthorDao {
@@ -17,10 +17,8 @@ class AuthorDaoImpl(
         em.createQuery("select b from Author b", Author::class.java)
             .resultList
 
-    override fun deleteAuthorById(id: Long) =
-        em.createQuery("delete from Author where id = :id")
-            .setParameter("id", id)
-            .executeUpdate()
+    override fun deleteAuthorById(author: Author) =
+        em.remove(author)
 
     override fun updateAuthorNameById(id: Long, name: String) =
         em.createQuery(

@@ -1,6 +1,7 @@
 package com.library.booklibrary.service
 
 import com.library.booklibrary.dto.AuthorDto
+import com.library.booklibrary.model.Author
 
 interface AuthorService {
     /**
@@ -24,7 +25,7 @@ interface AuthorService {
      * @param id  идентификатор автора
      * @return  количество удаленных строк
      */
-    fun deleteAuthorById(id: Long): Int
+    fun deleteAuthorById(author: AuthorDto)
 
     /**
      * Обновление автора

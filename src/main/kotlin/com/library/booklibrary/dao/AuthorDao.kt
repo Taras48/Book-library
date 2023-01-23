@@ -25,7 +25,7 @@ interface AuthorDao {
      * @param id  идентификатор автора
      * @return  количество удаленных строк
      */
-    fun deleteAuthorById(id: Long): Int
+    fun deleteAuthorById(author: Author)
 
     /**
      * Обновление автора

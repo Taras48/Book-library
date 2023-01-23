@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
-@Repository
+@Component
 class GenreDaoImpl(
     @PersistenceContext
     private val em: EntityManager
@@ -18,10 +18,8 @@ class GenreDaoImpl(
         em.createQuery("select b from Genre b", Genre::class.java)
             .resultList
 
-    override fun deleteGenreById(id: Long) =
-        em.createQuery("delete from Genre where id = :id")
-            .setParameter("id", id)
-            .executeUpdate()
+    override fun deleteGenreById(genre: Genre) =
+        em.remove(genre)
 
     override fun updateGenreNameById(id: Long, name: String) =
         em.createQuery(

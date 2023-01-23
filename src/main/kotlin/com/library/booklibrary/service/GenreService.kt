@@ -25,7 +25,7 @@ interface GenreService {
      * @param id  идентификатор жанра
      * @return  количество удаленных строк
      */
-    fun deleteGenreById(id: Long): Int
+    fun deleteGenreById(genre: GenreDto)
 
     /**
      * Обновление жанра

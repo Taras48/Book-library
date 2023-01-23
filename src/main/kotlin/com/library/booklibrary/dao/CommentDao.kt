@@ -25,7 +25,7 @@ interface CommentDao {
      * @param id  идентификатор комментария
      * @return  количество удаленных строк
      */
-    fun deleteCommentById(id: Long): Int
+    fun deleteCommentById(comment: Comment)
 
     /**
      * Обновление комментария

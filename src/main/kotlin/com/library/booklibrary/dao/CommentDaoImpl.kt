@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
-@Repository
+@Component
 class CommentDaoImpl(
     @PersistenceContext private val em: EntityManager,
 ) : CommentDao {
@@ -17,10 +17,8 @@ class CommentDaoImpl(
         em.createQuery("select c from Comment c", Comment::class.java)
             .resultList
 
-    override fun deleteCommentById(id: Long) =
-        em.createQuery("delete from Comment where id = :id")
-            .setParameter("id", id)
-            .executeUpdate()
+    override fun deleteCommentById(comment: Comment) =
+        em.remove(comment)
 
     override fun updateCommentTextById(id: Long, text: String) =
         em.createQuery(

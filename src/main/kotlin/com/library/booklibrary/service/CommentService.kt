@@ -31,7 +31,7 @@ interface CommentService {
      * @param id  идентификатор комментария
      * @return  количество удаленных комментариев
      */
-    fun deleteCommentById(id: Long): Int
+    fun deleteCommentById(comment: CommentDto)
 
     /**
      * Обновление комментария

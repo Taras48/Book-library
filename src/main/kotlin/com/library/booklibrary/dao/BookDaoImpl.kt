@@ -1,11 +1,12 @@
 package com.library.booklibrary.dao
 
 import com.library.booklibrary.model.Book
+import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
-@Repository
+@Component
 class BookDaoImpl() : BookDao {
     @PersistenceContext
     private lateinit var em: EntityManager
@@ -22,10 +23,8 @@ class BookDaoImpl() : BookDao {
         )
             .resultList
 
-    override fun deleteBookById(id: Long) =
-        em.createQuery("delete from Book where id = :id")
-            .setParameter("id", id)
-            .executeUpdate()
+    override fun deleteBookById(book:Book) =
+        em.remove(book)
 
     override fun saveBook(book: Book) =
         if (book.id == null) {

@@ -23,9 +23,9 @@ interface BookDao {
      * Удаление книги по id
      *
      * @param id  идентификатор книги
-     * @return  количество удаленных строк
+     *
      */
-    fun deleteBookById(id: Long): Int
+    fun deleteBookById(book:Book)
 
     /**
      * Обновление книги

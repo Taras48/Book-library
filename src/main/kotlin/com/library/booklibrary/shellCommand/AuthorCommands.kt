@@ -7,7 +7,6 @@ import org.springframework.shell.standard.ShellComponent
 import org.springframework.shell.standard.ShellMethod
 
 
-
 @ShellComponent
 class AuthorCommands(
     private val authorService: AuthorService,
@@ -15,8 +14,8 @@ class AuthorCommands(
 ) {
 
     @ShellMethod(value = "Delete Author by Id", key = ["da", "delete"])
-    fun deleteAuthorById(id: Long) {
-        authorService.deleteAuthorById(id)
+    fun deleteAuthorById(id: Long, name: String) {
+        authorService.deleteAuthorById(AuthorDto(id = id, name = name))
     }
 
     @ShellMethod(value = "Get all Authors", key = ["gaa", "get all"])
