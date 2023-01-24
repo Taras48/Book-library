@@ -2,6 +2,7 @@ package com.library.booklibrary.dao
 
 import com.library.booklibrary.model.Book
 import com.library.booklibrary.model.Genre
+import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
