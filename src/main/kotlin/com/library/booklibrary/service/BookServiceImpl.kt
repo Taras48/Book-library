@@ -5,14 +5,17 @@ import com.library.booklibrary.dto.BookDto
 import com.library.booklibrary.extensions.bookDtoToBook
 import com.library.booklibrary.extensions.bookToBookDto
 import org.springframework.stereotype.Service
+import javax.transaction.Transactional
 
 @Service
 class BookServiceImpl(
     private val bookDao: BookDao,
 ) : BookService {
+    @Transactional
     override fun findBookById(id: Long) =
         bookDao.findById(id).get().bookToBookDto()
 
+    @Transactional
     override fun getAllBooks() =
         bookDao.findAll().map { it.bookToBookDto() }
 
