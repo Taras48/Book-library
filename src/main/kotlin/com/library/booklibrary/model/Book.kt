@@ -15,7 +15,6 @@ class Book(
     val name: String,
 
     @OneToMany(
-        fetch = FetchType.EAGER,
         targetEntity = Comment::class,
         cascade = [CascadeType.ALL],
         orphanRemoval = true,
