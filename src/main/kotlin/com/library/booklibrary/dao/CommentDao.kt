@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param
 
 interface CommentDao : JpaRepository<Comment, Long>{
 
-    @Modifying
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("update Comment c set c.text = :name where c.id = :id")
     fun updateTextById(@Param("id") id: Long, @Param("text") text: String)
 }

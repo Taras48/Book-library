@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 
 interface AuthorDao : JpaRepository<Author, Long> {
-    @Modifying
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("update Author a set a.name = :name where a.id = :id")
     fun updateNameById(@Param("id") id: Long, @Param("name") name: String)
 }

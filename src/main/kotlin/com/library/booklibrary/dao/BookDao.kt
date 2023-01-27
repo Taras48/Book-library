@@ -11,7 +11,7 @@ interface BookDao : JpaRepository<Book, Long> {
     @EntityGraph(attributePaths = arrayOf("gener"))
     override fun findAll(): List<Book>
 
-    @Modifying
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("update Book b set b.name = :name where b.id = :id")
     fun updateNameById(@Param("id") id: Long, @Param("name") name: String)
 }
