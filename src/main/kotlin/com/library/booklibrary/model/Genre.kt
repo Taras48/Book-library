@@ -13,7 +13,7 @@ data class Genre(
     var id: Long?,
 
     @Column(name = "name")
-    val name: String,
+    var name: String,
 
     @OneToMany(targetEntity = Book::class)
     @Fetch(FetchMode.SUBSELECT)

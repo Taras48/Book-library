@@ -22,8 +22,13 @@ class BookServiceImpl(
     override fun deleteBookById(id: Long) =
         bookDao.deleteById(id)
 
-    override fun updateBookNameById(id: Long, name: String) =
-        bookDao.updateNameById(id, name)
+    override fun updateBookNameById(id: Long, name: String) {
+        bookDao.findById(id).get().let {
+            it.name = name
+            bookDao.save(it)
+        }
+    }
+
 
     override fun saveBook(book: BookDto) =
         bookDao.save(book.bookDtoToBook())

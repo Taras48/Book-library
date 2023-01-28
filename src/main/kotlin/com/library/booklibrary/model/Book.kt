@@ -14,7 +14,7 @@ class Book(
     var id: Long? = null,
 
     @Column(name = "name")
-    val name: String,
+    var name: String,
 
     @OneToMany(
         targetEntity = Comment::class,

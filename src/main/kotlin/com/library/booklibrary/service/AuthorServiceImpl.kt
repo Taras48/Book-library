@@ -22,8 +22,12 @@ class AuthorServiceImpl(
     override fun deleteAuthorById(id: Long) =
         authorDao.deleteById(id)
 
-    override fun updateAuthorNameById(id: Long, name: String) =
-        authorDao.updateNameById(id, name)
+    override fun updateAuthorNameById(id: Long, name: String) {
+        authorDao.findById(id).get().let {
+            it.name = name
+            authorDao.save(it)
+        }
+    }
 
     override fun saveAuthor(author: AuthorDto) =
         authorDao.save(author.authorDtoToAuthor()).authorToAuthorDto()

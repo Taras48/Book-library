@@ -70,13 +70,4 @@ class BookDaoImplTest() {
         assertThat(sessionFactory.statistics.prepareStatementCount).isEqualTo(3)
     }
 
-    @Test
-    @DisplayName("Обновление книги")
-    fun updateBookNameById() {
-        val actual = bookDao.updateNameById(2, "book3")
-        val actualBook = bookDao.findById(2).get()
-
-        assertEquals("book3", actualBook.name)
-    }
-
 }

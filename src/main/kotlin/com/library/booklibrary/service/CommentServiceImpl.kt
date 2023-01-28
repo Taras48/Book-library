@@ -26,8 +26,12 @@ class CommentServiceImpl(
     override fun deleteCommentById(id: Long) =
         commentDao.deleteById(id)
 
-    override fun updateCommentTextById(id: Long, text: String) =
-        commentDao.updateTextById(id, text)
+    override fun updateCommentTextById(id: Long, text: String) {
+        commentDao.findById(id).get().let {
+            it.text = text
+            commentDao.save(it)
+        }
+    }
 
     override fun saveComment(comment: CommentDto) =
         commentDao.save(comment.commentDtoToComment())
