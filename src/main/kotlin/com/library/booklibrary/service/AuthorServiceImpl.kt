@@ -5,6 +5,7 @@ import com.library.booklibrary.dto.AuthorDto
 import com.library.booklibrary.extensions.authorDtoToAuthor
 import com.library.booklibrary.extensions.authorToAuthorDto
 import org.springframework.stereotype.Service
+import javax.transaction.Transactional
 import kotlin.jvm.optionals.toList
 
 @Service
@@ -22,6 +23,7 @@ class AuthorServiceImpl(
     override fun deleteAuthorById(id: Long) =
         authorDao.deleteById(id)
 
+    @Transactional
     override fun updateAuthorNameById(id: Long, name: String) {
         authorDao.findById(id).get().let {
             it.name = name

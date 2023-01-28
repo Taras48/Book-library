@@ -24,6 +24,7 @@ class GenreServiceImpl(
     override fun deleteGenreById(id: Long) =
         genreDao.deleteById(id)
 
+    @Transactional
     override fun updateGenreNameById(id: Long, name: String) {
         genreDao.findById(id).get().let {
             it.name = name

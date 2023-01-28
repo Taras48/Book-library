@@ -6,6 +6,7 @@ import com.library.booklibrary.dto.CommentDto
 import com.library.booklibrary.extensions.commentDtoToComment
 import com.library.booklibrary.extensions.commentToCommentDto
 import org.springframework.stereotype.Service
+import javax.transaction.Transactional
 
 @Service
 class CommentServiceImpl(
@@ -26,6 +27,7 @@ class CommentServiceImpl(
     override fun deleteCommentById(id: Long) =
         commentDao.deleteById(id)
 
+    @Transactional
     override fun updateCommentTextById(id: Long, text: String) {
         commentDao.findById(id).get().let {
             it.text = text
