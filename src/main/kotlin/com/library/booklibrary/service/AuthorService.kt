@@ -31,9 +31,9 @@ interface AuthorService {
      * Обновление автора
      *
      * @param author  автора
-     * @return количество измененных строк
+     *
      */
-    fun updateAuthorNameById(id: Long, name: String): Int
+    fun updateAuthorNameById(id: Long, name: String)
 
     /**
      * Создание автора

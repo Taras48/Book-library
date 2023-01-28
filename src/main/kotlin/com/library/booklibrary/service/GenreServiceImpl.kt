@@ -25,8 +25,12 @@ class GenreServiceImpl(
     override fun deleteGenreById(genre: GenreDto) =
         genreDao.deleteGenreById(genre.genreDtoToGenre())
 
-    override fun updateGenreNameById(id: Long, name: String) =
-        genreDao.updateGenreNameById(id, name)
+    override fun updateGenreNameById(id: Long, name: String){
+        genreDao.findGenreById(id)?.let {
+            it.name = name
+            genreDao.saveGenre(it)
+        }
+    }
 
     override fun saveGenre(genre: GenreDto) =
         genreDao.saveGenre(genre.genreDtoToGenre()).genreToGenreDto()

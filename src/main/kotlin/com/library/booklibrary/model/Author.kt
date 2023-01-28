@@ -13,5 +13,5 @@ class Author(
     val id: Long?,
 
     @Column(name = "sur_name")
-    val name: String?
+    var name: String?
 )

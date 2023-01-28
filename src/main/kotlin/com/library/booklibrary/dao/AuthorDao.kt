@@ -28,14 +28,6 @@ interface AuthorDao {
     fun deleteAuthorById(author: Author)
 
     /**
-     * Обновление автора
-     *
-     * @param author  автора
-     * @return количество измененных строк
-     */
-    fun updateAuthorNameById(id: Long, name: String): Int
-
-    /**
      * Создание автора
      *
      * @param author  автора

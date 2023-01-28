@@ -34,16 +34,4 @@ class BookDaoImpl() : BookDao {
             em.merge(book)
         }
 
-    override fun updateBookNameById(id: Long, name: String) =
-        em.createQuery(
-            """
-            update Book b
-                set b.name = :name
-                where b.id = :id
-                """
-        )
-            .setParameter("name", name)
-            .setParameter("id", id)
-            .executeUpdate()
-
 }

@@ -21,18 +21,6 @@ class AuthorDaoImpl(
     override fun deleteAuthorById(author: Author) =
         em.remove(author)
 
-    override fun updateAuthorNameById(id: Long, name: String) =
-        em.createQuery(
-            """
-            update Author b
-                set b.name = :name
-                where b.id = :id
-                """
-        )
-            .setParameter("name", name)
-            .setParameter("id", id)
-            .executeUpdate()
-
     override fun saveAuthor(author: Author) =
         if (author.id == null) {
             em.persist(author)

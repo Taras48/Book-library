@@ -27,14 +27,6 @@ interface GenreDao {
     fun deleteGenreById(genre: Genre)
 
     /**
-     * Обновление жанра
-     *
-     * @param genre  жанра
-     * @return количество измененных строк
-     */
-    fun updateGenreNameById(id: Long, name: String): Int
-
-    /**
      * Создание жанра
      *
      * @param genre  жанра

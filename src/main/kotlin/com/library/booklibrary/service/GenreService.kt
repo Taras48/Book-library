@@ -31,9 +31,9 @@ interface GenreService {
      * Обновление жанра
      *
      * @param genre  жанра
-     * @return количество измененных строк
+     *
      */
-    fun updateGenreNameById(id: Long, name: String): Int
+    fun updateGenreNameById(id: Long, name: String)
 
     /**
      * Создание жанра

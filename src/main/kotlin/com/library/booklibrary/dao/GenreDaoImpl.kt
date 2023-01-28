@@ -22,18 +22,6 @@ class GenreDaoImpl(
     override fun deleteGenreById(genre: Genre) =
         em.remove(genre)
 
-    override fun updateGenreNameById(id: Long, name: String) =
-        em.createQuery(
-            """
-            update Genre b
-                set b.name = :name
-                where b.id = :id
-                """
-        )
-            .setParameter("name", name)
-            .setParameter("id", id)
-            .executeUpdate()
-
     override fun saveGenre(genre: Genre) =
         if (genre.id == null) {
             em.persist(genre)

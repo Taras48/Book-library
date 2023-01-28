@@ -28,14 +28,6 @@ interface BookDao {
     fun deleteBookById(book:Book)
 
     /**
-     * Обновление книги
-     *
-     * @param book  книга
-     * @return количество измененных строк
-     */
-    fun updateBookNameById(id: Long, name: String): Int
-
-    /**
      * Создание книги
      *
      * @param book  книга

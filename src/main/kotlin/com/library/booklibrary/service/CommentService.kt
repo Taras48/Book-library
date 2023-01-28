@@ -38,9 +38,9 @@ interface CommentService {
      *
      * @param id     идентификатор комментария
      * @param text   текст комментария
-     * @return количество измененных строк
+     *
      */
-    fun updateCommentTextById( id: Long, text: String): Int
+    fun updateCommentTextById( id: Long, text: String)
 
     /**
      * Создание комментария
