@@ -4,7 +4,6 @@ import com.library.booklibrary.dao.BookDao
 import com.library.booklibrary.dto.BookDto
 import com.library.booklibrary.extensions.bookDtoToBook
 import com.library.booklibrary.extensions.bookToBookDto
-import com.library.booklibrary.model.Book
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
@@ -13,25 +12,31 @@ class BookServiceImpl(
     private val bookDao: BookDao,
 ) : BookService {
 
-    @Transactional
+
     override fun findBookById(id: Long) =
         bookDao.findBookById(id)?.bookToBookDto()
 
-    @Transactional
     override fun getAllBooks() =
         bookDao.getAllBooks()?.map { it.bookToBookDto() }
 
-    override fun deleteBookById(book: BookDto) =
-        bookDao.deleteBookById(book.bookDtoToBook())
+    @Transactional
+    override fun saveBook(book: BookDto) =
+        bookDao.saveBook(book.bookDtoToBook())
+            .bookToBookDto()
 
-    override fun updateBookNameById(id: Long, name: String){
+
+    @Transactional
+    override fun updateBookNameById(id: Long, name: String) {
         bookDao.findBookById(id)?.let {
             it.name = name
             bookDao.saveBook(it)
         }
     }
 
-    override fun saveBook(book: BookDto) =
-        bookDao.saveBook(book.bookDtoToBook())
-            .bookToBookDto()
+    @Transactional
+    override fun deleteBookById(id: Long) {
+        bookDao.findBookById(id)?.let {
+            bookDao.deleteBookById(it)
+        }
+    }
 }

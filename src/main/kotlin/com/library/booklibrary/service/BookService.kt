@@ -23,9 +23,9 @@ interface BookService {
      * Удаление книги по id
      *
      * @param id  идентификатор книги
-     * @return  количество удаленных строк
+     *
      */
-    fun deleteBookById(book:BookDto)
+    fun deleteBookById(id: Long)
 
     /**
      * Обновление книги

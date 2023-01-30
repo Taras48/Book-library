@@ -4,6 +4,13 @@ import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import javax.persistence.*
 
+@NamedEntityGraph(
+    name = "book-entity-graph",
+    attributeNodes = [
+        NamedAttributeNode("authors"),
+        NamedAttributeNode("gener")
+    ]
+)
 @Entity
 @Table(name = "books")
 class Book(
@@ -14,23 +21,12 @@ class Book(
     @Column(name = "name")
     var name: String,
 
-    @OneToMany(
-        targetEntity = Comment::class,
-        cascade = [CascadeType.ALL],
-        orphanRemoval = true,
-
-        )
-    @JoinColumn(name = "book_id")
-    @Fetch(FetchMode.SUBSELECT)
-    var comments: MutableList<Comment> = mutableListOf(),
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.PERSIST])
+    @ManyToMany(cascade = [CascadeType.PERSIST])
     @JoinTable(
         name = "author_books",
         joinColumns = [JoinColumn(name = "author_id")],
         inverseJoinColumns = [JoinColumn(name = "book_id")]
     )
-    @Fetch(FetchMode.SUBSELECT)
     var authors: MutableList<Author> = mutableListOf(),
 
     @ManyToOne(targetEntity = Genre::class, fetch = FetchType.LAZY, optional = false)

@@ -9,7 +9,6 @@ fun Book.bookToBookDto() =
         this.id,
         this.name,
         this.authors.map { it.authorToAuthorDto() }.toMutableList(),
-        this.comments.map { it.commentToCommentDto() }.toMutableList(),
         this.gener?.genreToGenreDto()
     )
 
@@ -17,7 +16,6 @@ fun BookDto.bookDtoToBook() =
     Book(
         this.id,
         this.name,
-        this.comments.map { it.commentDtoToComment() }.toMutableList(),
         this.authors.map { it.authorDtoToAuthor() }.toMutableList(),
         this.gener?.genreDtoToGenre()
     )
@@ -38,12 +36,14 @@ fun Comment.commentToCommentDto() =
     CommentDto(
         this.id,
         this.text,
+        this.book?.bookToBookDto()
     )
 
 fun CommentDto.commentDtoToComment() =
     Comment(
         this.id,
         this.text,
+        this.book?.bookDtoToBook()
     )
 
 fun Genre.genreToGenreDto() =

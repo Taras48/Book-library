@@ -11,6 +11,10 @@ class Comment(
     val id: Long? = null,
 
     @Column(name = "text")
-    var text: String? = null
+    var text: String? = null,
+
+    @ManyToOne(cascade = [CascadeType.ALL], targetEntity = Book::class, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "book_id")
+    var book: Book? = null,
 )
 

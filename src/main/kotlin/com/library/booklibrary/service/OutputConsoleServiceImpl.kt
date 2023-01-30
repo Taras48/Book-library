@@ -22,7 +22,6 @@ class OutputConsoleServiceImpl : OutputConsoleService{
         println("""
             Book Name: ${book.name}
             Book authors: ${book.authors.map { it.id to it.name }}
-            Book comments: ${book.comments.map { it.id to it.text }}
             Book genre: ${book.gener?.name}
         """.trimIndent())
 
