@@ -12,19 +12,19 @@ import javax.transaction.Transactional
 class GenreServiceImpl(
     private val genreDao: GenreDao,
 ) : GenreService {
-    @Transactional
     override fun findGenreById(id: Long) =
         genreDao.findGenreById(id)
             ?.genreToGenreDto()
 
-    @Transactional
     override fun getAllGenres() =
         genreDao.getAllGenres()
             ?.map { it.genreToGenreDto() }
 
+    @Transactional
     override fun deleteGenreById(genre: GenreDto) =
         genreDao.deleteGenreById(genre.genreDtoToGenre())
 
+    @Transactional
     override fun updateGenreNameById(id: Long, name: String){
         genreDao.findGenreById(id)?.let {
             it.name = name
@@ -32,6 +32,7 @@ class GenreServiceImpl(
         }
     }
 
+    @Transactional
     override fun saveGenre(genre: GenreDto) =
         genreDao.saveGenre(genre.genreDtoToGenre()).genreToGenreDto()
 }
