@@ -9,23 +9,13 @@ import javax.persistence.PersistenceContext
 class BookDaoImpl() : BookDao {
     @PersistenceContext
     private lateinit var em: EntityManager
-    override fun findBookById(id: Long) =
-        em.createQuery(
-            """
-            select b 
-            from Book b
-            where b.id = :id
-            """.trimIndent(), Book::class.java
-        )
-            .setParameter("id", id)
-            .setHint("javax.persistence.fetchgraph", em.getEntityGraph("book-entity-graph"))
-            .singleResult
-//
-//        val entityGraph = em.getEntityGraph("book-entity-graph")
-//        val properties = mapOf("javax.persistence.fetchgraph" to entityGraph)
-//
-//        return em.find(Book::class.java, id, properties)
-//    }
+    override fun findBookById(id: Long):Book?{
+
+        val entityGraph = em.getEntityGraph("book-entity-graph")
+        val properties = mapOf("javax.persistence.fetchgraph" to entityGraph)
+
+        return em.find(Book::class.java, id, properties)
+    }
 
 
     override fun getAllBooks() =

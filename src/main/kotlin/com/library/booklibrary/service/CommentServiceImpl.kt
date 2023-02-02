@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class CommentServiceImpl(
-    private val commentDao: CommentDao,
-    private val bookService: BookService,
+    private val commentDao: CommentDao
 ) : CommentService {
     override fun findCommentById(id: Long) =
         commentDao.findCommentById(id)
@@ -22,7 +21,7 @@ class CommentServiceImpl(
             ?.map { it.commentToCommentDto() }
 
     override fun getCommentsByBookId(id: Long) =
-        bookService.findBookById(id)?.comments
+        commentDao.getCommentsByBookId(id)?.map { it.commentToCommentDto() }
 
     override fun deleteCommentById(comment: CommentDto) =
         commentDao.deleteCommentById(comment.commentDtoToComment())

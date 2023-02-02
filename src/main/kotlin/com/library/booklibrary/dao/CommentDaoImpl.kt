@@ -18,6 +18,11 @@ class CommentDaoImpl(
         em.createQuery("select c from Comment c", Comment::class.java)
             .resultList
 
+    override fun getCommentsByBookId(id: Long) =
+        em.createQuery("select c from Comment c where c.book.id =: id", Comment::class.java)
+            .setParameter("id", id)
+            .resultList
+
     override fun deleteCommentById(comment: Comment) =
         em.remove(comment)
 

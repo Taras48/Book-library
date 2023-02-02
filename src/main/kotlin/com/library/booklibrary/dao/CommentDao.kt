@@ -20,6 +20,14 @@ interface CommentDao {
     fun getAllComments(): List<Comment>?
 
     /**
+     * Получение всех комментариев по id книги
+     *
+     * @param id  идентификатор книги
+     * @return комментарии
+     */
+    fun getCommentsByBookId(id: Long): List<Comment>?
+
+    /**
      * Удаление комментария по id
      *
      * @param id  идентификатор комментария
