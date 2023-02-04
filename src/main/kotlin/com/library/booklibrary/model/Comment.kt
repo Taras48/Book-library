@@ -1,6 +1,5 @@
 package com.library.booklibrary.model
 
-import com.library.booklibrary.dto.CommentDto
 import javax.persistence.*
 
 @Entity
@@ -13,8 +12,7 @@ class Comment(
     @Column(name = "text")
     var text: String? = null,
 
-    @ManyToOne(cascade = [CascadeType.ALL], targetEntity = Book::class, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "book_id")
+    @ManyToOne(targetEntity = Book::class,fetch = FetchType.LAZY)
     var book: Book? = null,
 )
 

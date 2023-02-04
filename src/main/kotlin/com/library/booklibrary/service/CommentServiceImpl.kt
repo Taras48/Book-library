@@ -2,16 +2,17 @@ package com.library.booklibrary.service
 
 import com.library.Commentlibrary.dao.CommentDao
 import com.library.Commentlibrary.service.CommentService
+import com.library.booklibrary.dao.BookDao
 import com.library.booklibrary.dto.CommentDto
 import com.library.booklibrary.extensions.commentDtoToComment
 import com.library.booklibrary.extensions.commentToCommentDto
-import com.library.booklibrary.model.Comment
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
 @Service
 class CommentServiceImpl(
-    private val commentDao: CommentDao
+    private val commentDao: CommentDao,
+    private val bookDao: BookDao
 ) : CommentService {
     override fun findCommentById(id: Long) =
         commentDao.findCommentById(id)
@@ -21,8 +22,11 @@ class CommentServiceImpl(
         commentDao.getAllComments()
             ?.map { it.commentToCommentDto() }
 
+    @Transactional
     override fun getCommentsByBookId(id: Long) =
-        commentDao.getCommentsByBookId(id)?.map { it.commentToCommentDto() }
+        bookDao.findBookById(id)
+            ?.comments
+            ?.map { it.commentToCommentDto() }
 
     @Transactional
     override fun deleteCommentById(comment: CommentDto) =

@@ -1,7 +1,13 @@
 package com.library.booklibrary.extensions
 
-import com.library.booklibrary.dto.*
-import com.library.booklibrary.model.*
+import com.library.booklibrary.dto.AuthorDto
+import com.library.booklibrary.dto.BookDto
+import com.library.booklibrary.dto.CommentDto
+import com.library.booklibrary.dto.GenreDto
+import com.library.booklibrary.model.Author
+import com.library.booklibrary.model.Book
+import com.library.booklibrary.model.Comment
+import com.library.booklibrary.model.Genre
 
 
 fun Book.bookToBookDto() =
@@ -35,15 +41,13 @@ fun AuthorDto.authorDtoToAuthor() =
 fun Comment.commentToCommentDto() =
     CommentDto(
         this.id,
-        this.text,
-        this.book?.bookToBookDto()
+        this.text
     )
 
 fun CommentDto.commentDtoToComment() =
     Comment(
         this.id,
-        this.text,
-        this.book?.bookDtoToBook()
+        this.text
     )
 
 fun Genre.genreToGenreDto() =

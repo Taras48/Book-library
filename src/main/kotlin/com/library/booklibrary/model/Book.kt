@@ -1,5 +1,6 @@
 package com.library.booklibrary.model
 
+import org.hibernate.annotations.BatchSize
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import javax.persistence.*
@@ -32,6 +33,10 @@ class Book(
     @ManyToOne(targetEntity = Genre::class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "genre_id")
     var gener: Genre? = null,
+
+    @OneToMany(mappedBy = "book",fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+//    @JoinColumn(name = "book_id")
+    var comments: MutableList<Comment> = mutableListOf()
 )
 
 
