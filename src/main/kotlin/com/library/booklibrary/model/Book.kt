@@ -35,7 +35,6 @@ class Book(
     var gener: Genre? = null,
 
     @OneToMany(mappedBy = "book",fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-//    @JoinColumn(name = "book_id")
     var comments: MutableList<Comment> = mutableListOf()
 )
 
