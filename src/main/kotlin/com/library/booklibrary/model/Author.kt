@@ -1,15 +1,17 @@
 package com.library.booklibrary.model
 
 import com.library.booklibrary.dto.AuthorDto
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
+import javax.persistence.*
 
-data class Author(
-    val id: Long,
-    val surName: String?,
+@Entity
+@Table(name = "authors")
+class Author(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long?,
+
+    @Column(name = "sur_name")
+    var name: String?
 )
-
-
-fun Author.authorToAuthorDto() =
-    AuthorDto(
-        this.id,
-        this.surName
-    )

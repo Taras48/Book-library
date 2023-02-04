@@ -25,20 +25,21 @@ interface BookService {
      * @param id  идентификатор книги
      * @return  количество удаленных строк
      */
-    fun deleteBookById(id: Long): Int
+    fun deleteBookById(id: Long)
 
     /**
      * Обновление книги
      *
      * @param book  книга
+     * @return количество измененных строк
      */
-    fun updateBook(book: BookDto)
+    fun updateBookNameById(id: Long, name: String)
 
     /**
      * Создание книги
      *
      * @param book  книга
-     * @return идентификатор книги
+     * @return книга
      */
-    fun insertBook(book: BookDto): Long
+    fun saveBook(book: BookDto): BookDto
 }

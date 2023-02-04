@@ -1,21 +1,43 @@
 package com.library.booklibrary.model
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.library.booklibrary.dto.BookDto
-import com.library.booklibrary.dto.authorDtoToAuthor
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
+import javax.persistence.*
 
-data class Book(
+@Entity
+@Table(name = "books")
+class Book(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    val name: String,
-    var authors: MutableList<Author> = mutableListOf(),
-    var gener: Genre? = null
-)
 
-fun Book.bookToBookDto()=
-    BookDto(
-this.id,
-this.name,
-this.authors.map { it.authorToAuthorDto() }.toMutableList(),
-this.gener?.genreToGenreDto(),
+    @Column(name = "name")
+    var name: String,
+
+    @OneToMany(
+        targetEntity = Comment::class,
+        cascade = [CascadeType.ALL],
+        orphanRemoval = true,
+
+    )
+    @JoinColumn(name = "book_id")
+    @Fetch(FetchMode.SUBSELECT)
+    var comments: MutableList<Comment> = mutableListOf(),
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+    @JoinTable(
+        name = "author_books",
+        joinColumns = [JoinColumn(name = "author_id")],
+        inverseJoinColumns = [JoinColumn(name = "book_id")]
+    )
+    @Fetch(FetchMode.SUBSELECT)
+    var authors: MutableList<Author> = mutableListOf(),
+
+    @ManyToOne(targetEntity = Genre::class, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn (name="genre_id")
+    var gener: Genre? = null
 )
 
 

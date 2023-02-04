@@ -2,26 +2,36 @@ package com.library.booklibrary.service
 
 import com.library.booklibrary.dao.BookDao
 import com.library.booklibrary.dto.BookDto
-import com.library.booklibrary.dto.bookDtoToBook
-import com.library.booklibrary.model.bookToBookDto
+import com.library.booklibrary.extensions.bookDtoToBook
+import com.library.booklibrary.extensions.bookToBookDto
 import org.springframework.stereotype.Service
+import javax.transaction.Transactional
 
 @Service
 class BookServiceImpl(
-    val bookDao: BookDao
-):BookService {
+    private val bookDao: BookDao,
+) : BookService {
+    @Transactional
     override fun findBookById(id: Long) =
-        bookDao.findBookById(id)?.bookToBookDto()
+        bookDao.findById(id).get().bookToBookDto()
 
-    override fun getAllBooks()=
-        bookDao.getAllBooks()?.map { it.bookToBookDto() }
+    @Transactional
+    override fun getAllBooks() =
+        bookDao.findAll().map { it.bookToBookDto() }
 
     override fun deleteBookById(id: Long) =
-        bookDao.deleteBookById(id)
+        bookDao.deleteById(id)
 
-    override fun updateBook(book: BookDto)=
-        bookDao.updateBook(book.bookDtoToBook())
+    @Transactional
+    override fun updateBookNameById(id: Long, name: String) {
+        bookDao.findById(id).get().let {
+            it.name = name
+            bookDao.save(it)
+        }
+    }
 
-    override fun insertBook(book: BookDto) =
-        bookDao.insertBook(book.bookDtoToBook())
+
+    override fun saveBook(book: BookDto) =
+        bookDao.save(book.bookDtoToBook())
+            .bookToBookDto()
 }
