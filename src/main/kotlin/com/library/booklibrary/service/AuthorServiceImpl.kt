@@ -6,11 +6,10 @@ import com.library.booklibrary.extensions.authorDtoToAuthor
 import com.library.booklibrary.extensions.authorToAuthorDto
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
-import kotlin.jvm.optionals.toList
 
 @Service
 class AuthorServiceImpl(
-    val authorDao: AuthorDao,
+    private val authorDao: AuthorDao,
 ) : AuthorService {
     override fun findAuthorById(id: Long) =
         authorDao.findById(id).get().authorToAuthorDto()
