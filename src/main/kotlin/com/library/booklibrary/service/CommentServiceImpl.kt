@@ -2,7 +2,6 @@ package com.library.booklibrary.service
 
 import com.library.Commentlibrary.dao.CommentDao
 import com.library.Commentlibrary.service.CommentService
-import com.library.booklibrary.dao.BookDao
 import com.library.booklibrary.dto.CommentDto
 import com.library.booklibrary.extensions.commentDtoToComment
 import com.library.booklibrary.extensions.commentToCommentDto
@@ -12,36 +11,31 @@ import javax.transaction.Transactional
 @Service
 class CommentServiceImpl(
     private val commentDao: CommentDao,
-    private val bookDao: BookDao
+    private val bookService: BookService,
 ) : CommentService {
     override fun findCommentById(id: Long) =
-        commentDao.findCommentById(id)
-            ?.commentToCommentDto()
+        commentDao.findById(id).get()
+            .commentToCommentDto()
 
     override fun getAllComments() =
-        commentDao.getAllComments()
-            ?.map { it.commentToCommentDto() }
+        commentDao.findAll()
+            .map { it.commentToCommentDto() }
 
-    @Transactional
     override fun getCommentsByBookId(id: Long) =
-        bookDao.findBookById(id)
-            ?.comments
-            ?.map { it.commentToCommentDto() }
+        bookService.findBookById(id)?.comments
+
+    override fun deleteCommentById(id: Long) =
+        commentDao.deleteById(id)
 
     @Transactional
-    override fun deleteCommentById(comment: CommentDto) =
-        commentDao.deleteCommentById(comment.commentDtoToComment())
-
-    @Transactional
-    override fun updateCommentTextById(id: Long, text: String){
-        commentDao.findCommentById(id)?.let {
+    override fun updateCommentTextById(id: Long, text: String) {
+        commentDao.findById(id).get().let {
             it.text = text
-            commentDao.saveComment(it)
+            commentDao.save(it)
         }
     }
 
-    @Transactional
     override fun saveComment(comment: CommentDto) =
-        commentDao.saveComment(comment.commentDtoToComment())
+        commentDao.save(comment.commentDtoToComment())
             .commentToCommentDto()
 }

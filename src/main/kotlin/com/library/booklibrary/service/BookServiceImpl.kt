@@ -11,32 +11,27 @@ import javax.transaction.Transactional
 class BookServiceImpl(
     private val bookDao: BookDao,
 ) : BookService {
-
-
+    @Transactional
     override fun findBookById(id: Long) =
-        bookDao.findBookById(id)?.bookToBookDto()
-
-    override fun getAllBooks() =
-        bookDao.getAllBooks()?.map { it.bookToBookDto() }
+        bookDao.findById(id).get().bookToBookDto()
 
     @Transactional
-    override fun saveBook(book: BookDto) =
-        bookDao.saveBook(book.bookDtoToBook())
-            .bookToBookDto()
+    override fun getAllBooks() =
+        bookDao.findAll().map { it.bookToBookDto() }
 
+    override fun deleteBookById(id: Long) =
+        bookDao.deleteById(id)
 
     @Transactional
     override fun updateBookNameById(id: Long, name: String) {
-        bookDao.findBookById(id)?.let {
+        bookDao.findById(id).get().let {
             it.name = name
-            bookDao.saveBook(it)
+            bookDao.save(it)
         }
     }
 
-    @Transactional
-    override fun deleteBookById(id: Long) {
-        bookDao.findBookById(id)?.let {
-            bookDao.deleteBookById(it)
-        }
-    }
+
+    override fun saveBook(book: BookDto) =
+        bookDao.save(book.bookDtoToBook())
+            .bookToBookDto()
 }

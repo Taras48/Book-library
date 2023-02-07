@@ -4,7 +4,6 @@ import com.library.booklibrary.dao.GenreDao
 import com.library.booklibrary.dto.GenreDto
 import com.library.booklibrary.extensions.genreDtoToGenre
 import com.library.booklibrary.extensions.genreToGenreDto
-import com.library.booklibrary.model.Genre
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
@@ -12,27 +11,27 @@ import javax.transaction.Transactional
 class GenreServiceImpl(
     private val genreDao: GenreDao,
 ) : GenreService {
+    @Transactional
     override fun findGenreById(id: Long) =
-        genreDao.findGenreById(id)
-            ?.genreToGenreDto()
+        genreDao.findById(id).get()
+            .genreToGenreDto()
 
+    @Transactional
     override fun getAllGenres() =
-        genreDao.getAllGenres()
-            ?.map { it.genreToGenreDto() }
+        genreDao.findAll()
+            .map { it.genreToGenreDto() }
+
+    override fun deleteGenreById(id: Long) =
+        genreDao.deleteById(id)
 
     @Transactional
-    override fun deleteGenreById(genre: GenreDto) =
-        genreDao.deleteGenreById(genre.genreDtoToGenre())
-
-    @Transactional
-    override fun updateGenreNameById(id: Long, name: String){
-        genreDao.findGenreById(id)?.let {
+    override fun updateGenreNameById(id: Long, name: String) {
+        genreDao.findById(id).get().let {
             it.name = name
-            genreDao.saveGenre(it)
+            genreDao.save(it)
         }
     }
 
-    @Transactional
     override fun saveGenre(genre: GenreDto) =
-        genreDao.saveGenre(genre.genreDtoToGenre()).genreToGenreDto()
+        genreDao.save(genre.genreDtoToGenre()).genreToGenreDto()
 }
