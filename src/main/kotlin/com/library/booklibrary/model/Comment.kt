@@ -1,6 +1,5 @@
 package com.library.booklibrary.model
 
-import com.library.booklibrary.dto.CommentDto
 import javax.persistence.*
 
 @Entity
@@ -11,6 +10,9 @@ class Comment(
     val id: Long? = null,
 
     @Column(name = "text")
-    var text: String? = null
+    var text: String? = null,
+
+    @ManyToOne(targetEntity = Book::class,fetch = FetchType.LAZY)
+    var book: Book? = null,
 )
 

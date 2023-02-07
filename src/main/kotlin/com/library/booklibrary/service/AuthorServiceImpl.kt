@@ -19,8 +19,13 @@ class AuthorServiceImpl(
         authorDao.findAll()
             .map { it.authorToAuthorDto() }
 
+    @Transactional
     override fun deleteAuthorById(id: Long) =
-        authorDao.deleteById(id)
+        authorDao.findById(id)
+            .get()
+            .let {
+                authorDao.delete(it)
+            }
 
     @Transactional
     override fun updateAuthorNameById(id: Long, name: String) {
@@ -30,6 +35,7 @@ class AuthorServiceImpl(
         }
     }
 
+    @Transactional
     override fun saveAuthor(author: AuthorDto) =
         authorDao.save(author.authorDtoToAuthor()).authorToAuthorDto()
 }
