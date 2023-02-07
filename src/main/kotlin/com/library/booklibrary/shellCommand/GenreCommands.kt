@@ -14,7 +14,7 @@ class GenreCommands(
 
     @ShellMethod(value = "Delete Genre by Id", key = ["dg", "delete"])
     fun deleteGenreById(id: Long, name: String) {
-        GenreService.deleteGenreById(GenreDto(id = id, name = name))
+        GenreService.deleteGenreById(id)
     }
 
     @ShellMethod(value = "Get all Genres", key = ["gag", "get all"])

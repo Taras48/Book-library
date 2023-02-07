@@ -1,10 +1,7 @@
-package com.library.Commentlibrary.dao
+package com.library.booklibrary.dao
 
 import com.library.booklibrary.model.Comment
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Modifying
-import org.springframework.data.jpa.repository.Query
-import org.springframework.data.repository.query.Param
 
-interface CommentDao : JpaRepository<Comment, Long>{
+interface CommentDao : JpaRepository<Comment, Long> {
 }

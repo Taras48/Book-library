@@ -15,7 +15,7 @@ class AuthorCommands(
 
     @ShellMethod(value = "Delete Author by Id", key = ["da", "delete"])
     fun deleteAuthorById(id: Long, name: String) {
-        authorService.deleteAuthorById(AuthorDto(id = id, name = name))
+        authorService.deleteAuthorById(id)
     }
 
     @ShellMethod(value = "Get all Authors", key = ["gaa", "get all"])
