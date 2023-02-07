@@ -13,7 +13,7 @@ class CommentCommands(
 ) {
 
     @ShellMethod(value = "Delete Comment by Id", key = ["dc", "delete"])
-    fun deleteCommentById(id: Long) {
+    fun deleteCommentById(id: Long, text: String) {
         commentService.deleteCommentById(id)
     }
 

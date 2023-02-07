@@ -1,12 +1,11 @@
 package com.library.booklibrary.service
 
-import com.library.Authorlibrary.dao.AuthorDao
+import com.library.booklibrary.dao.AuthorDao
 import com.library.booklibrary.dto.AuthorDto
 import com.library.booklibrary.extensions.authorDtoToAuthor
 import com.library.booklibrary.extensions.authorToAuthorDto
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
-import kotlin.jvm.optionals.toList
 
 @Service
 class AuthorServiceImpl(
@@ -20,8 +19,13 @@ class AuthorServiceImpl(
         authorDao.findAll()
             .map { it.authorToAuthorDto() }
 
+    @Transactional
     override fun deleteAuthorById(id: Long) =
-        authorDao.deleteById(id)
+        authorDao.findById(id)
+            .get()
+            .let {
+                authorDao.delete(it)
+            }
 
     @Transactional
     override fun updateAuthorNameById(id: Long, name: String) {
@@ -31,6 +35,7 @@ class AuthorServiceImpl(
         }
     }
 
+    @Transactional
     override fun saveAuthor(author: AuthorDto) =
         authorDao.save(author.authorDtoToAuthor()).authorToAuthorDto()
 }

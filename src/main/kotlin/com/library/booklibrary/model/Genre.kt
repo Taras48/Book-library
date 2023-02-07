@@ -10,13 +10,9 @@ import javax.persistence.*
 data class Genre(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long?,
+    var id: Long? = null,
 
     @Column(name = "name")
-    var name: String,
-
-    @OneToMany(targetEntity = Book::class)
-    @Fetch(FetchMode.SUBSELECT)
-    var books: MutableList<Book> = mutableListOf()
+    var name: String
 )
 

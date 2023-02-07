@@ -1,7 +1,7 @@
 package com.library.booklibrary.service
 
-import com.library.Commentlibrary.dao.CommentDao
 import com.library.Commentlibrary.service.CommentService
+import com.library.booklibrary.dao.CommentDao
 import com.library.booklibrary.dto.CommentDto
 import com.library.booklibrary.extensions.commentDtoToComment
 import com.library.booklibrary.extensions.commentToCommentDto

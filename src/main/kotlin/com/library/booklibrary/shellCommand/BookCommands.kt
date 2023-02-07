@@ -11,22 +11,22 @@ import org.springframework.shell.standard.ShellMethod
 @ShellComponent
 class BookCommands(
     private val bookService: BookService,
-    private val outputConsoleService: OutputConsoleService
+    private val outputConsoleService: OutputConsoleService,
 ) {
 
-    @ShellMethod(value = "Delete Book by Id", key = ["db", "delete"])
-    fun deleteBookById(id: Long) {
-        bookService.deleteBookById(id)
-    }
-
-    @ShellMethod(value = "Get all Books", key = ["gab", "get all"])
-    fun getAllBooks() {
-         bookService.getAllBooks()?.map { outputConsoleService.outputBook(it) }
+    @ShellMethod(value = "Get console", key = ["gc"])
+    fun getConsole() {
+        Console.main()
     }
 
     @ShellMethod(value = "Get book by id", key = ["gb", "get book"])
     fun getBookById(id: Long) {
-         bookService.findBookById(id)?.let { outputConsoleService.outputBook(it) }
+        bookService.findBookById(id)?.let { outputConsoleService.outputBook(it) }
+    }
+
+    @ShellMethod(value = "Get all Books", key = ["gab", "get all"])
+    fun getAllBooks() {
+        bookService.getAllBooks()?.map { outputConsoleService.outputBook(it) }
     }
 
     @ShellMethod(value = "Save book", key = ["sb", "save book"])
@@ -38,5 +38,10 @@ class BookCommands(
     @ShellMethod(value = "Update book", key = ["ub", "update book"])
     fun updateBookNameById(id: Long, name: String) {
         bookService.updateBookNameById(id, name)
+    }
+
+    @ShellMethod(value = "Delete Book by Id", key = ["db", "delete"])
+    fun deleteBookById(id: Long) {
+        bookService.deleteBookById(id)
     }
 }

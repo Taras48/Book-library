@@ -23,7 +23,7 @@ interface BookService {
      * Удаление книги по id
      *
      * @param id  идентификатор книги
-     * @return  количество удаленных строк
+     *
      */
     fun deleteBookById(id: Long)
 
@@ -31,7 +31,7 @@ interface BookService {
      * Обновление книги
      *
      * @param book  книга
-     * @return количество измененных строк
+     *
      */
     fun updateBookNameById(id: Long, name: String)
 

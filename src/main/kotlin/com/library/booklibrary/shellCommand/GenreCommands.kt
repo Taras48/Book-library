@@ -13,7 +13,7 @@ class GenreCommands(
 ) {
 
     @ShellMethod(value = "Delete Genre by Id", key = ["dg", "delete"])
-    fun deleteGenreById(id: Long) {
+    fun deleteGenreById(id: Long, name: String) {
         GenreService.deleteGenreById(id)
     }
 
