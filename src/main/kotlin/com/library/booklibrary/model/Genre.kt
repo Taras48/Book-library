@@ -13,10 +13,6 @@ data class Genre(
     var id: Long?,
 
     @Column(name = "name")
-    var name: String,
-
-    @OneToMany(targetEntity = Book::class)
-    @Fetch(FetchMode.SUBSELECT)
-    var books: MutableList<Book> = mutableListOf()
+    var name: String
 )
 

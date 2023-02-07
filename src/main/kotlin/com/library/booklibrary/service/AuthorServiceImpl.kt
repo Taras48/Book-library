@@ -1,6 +1,6 @@
 package com.library.booklibrary.service
 
-import com.library.Authorlibrary.dao.AuthorDao
+import com.library.booklibrary.dao.AuthorDao
 import com.library.booklibrary.dto.AuthorDto
 import com.library.booklibrary.extensions.authorDtoToAuthor
 import com.library.booklibrary.extensions.authorToAuthorDto

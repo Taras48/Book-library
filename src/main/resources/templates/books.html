@@ -38,10 +38,9 @@
     <tbody>
     <tr th:each="book : ${books}">
         <td th:text="${book.id}">1</td>
-        <td th:text="${book.name}">John Doe</td>
-        <td th:text="${book.gener}">John Doe</td>
+        <td th:text="${book.name}">Effective Java</td>
         <td>
-            <a href="edit.html" th:href="@{/edit(id=${person.id})}">Edit</a>
+            <a href="edit.html" th:href="@{/edit}">Edit</a>
         </td>
     </tr>
     </tbody>

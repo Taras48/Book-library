@@ -25,17 +25,12 @@
 <body>
 
 <!-- book edition -->
-<form id="edit-form" action="edit.html" th:method="post" th:action="@{/edit(id=${book.id})}" th:object="${book}">
+<form id="save-form" action="save.html" th:method="post" th:action="@{/save}" th:object="${book}">
     <h3>book Info:</h3>
 
     <div class="row">
-        <label for="id-input">ID:</label>
-        <input id="id-input" type="text" readonly="readonly" value="1" th:value="*{id}"/>
-    </div>
-
-    <div class="row">
         <label for="book-name-input">Name:</label>
-        <input id="book-name-input" name="name" type="text" value="Effective Java" th:value="*{name}"/>
+        <input id="book-name-input" name="name" type="text" placeholder="Effective Java" th:value="*{name}"/>
     </div>
 
     <div class="row">
