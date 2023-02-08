@@ -7,13 +7,12 @@ import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 
 
 @Controller
 class BookController(
-    private val bookService: BookService
+    private val bookService: BookService,
 ) {
 
     @GetMapping("/books")
@@ -23,16 +22,39 @@ class BookController(
         return "books"
     }
 
+    @GetMapping("/book")
+    fun getBookById(@RequestParam("id") id: Long, model: Model): String? {
+        val book = bookService.findBookById(id)
+        model.addAttribute("book", book)
+        return "book"
+    }
+
     @GetMapping("/edit")
-    fun editPage(@RequestParam("id") id: Long, model: Model): String? {
+    fun getEditPageForm(@RequestParam("id") id: Long, model: Model): String? {
         val book = bookService.findBookById(id)
         model.addAttribute("book", book)
         return "edit"
     }
 
-    @PostMapping("/save")
-    fun getAllBook(@RequestParam("name") name: String, model: Model): String {
-        bookService.saveBook(BookDto(name = name))
-        return "books"
+    @PostMapping("/add/book")
+    fun saveBook(book: BookDto, model: Model): String {
+        bookService.saveBook(book)
+        return "redirect:/books"
+    }
+
+    @GetMapping("/add/book")
+    fun getSaveBookForm(model: Model) = "save"
+
+    @GetMapping("/delete/book")
+    fun getDeleteBookForm(@RequestParam("id") id: Long, model: Model): String? {
+        val book = bookService.findBookById(id)
+        model.addAttribute("book", book)
+        return "delete"
+    }
+
+    @PostMapping("/delete/book")
+    fun deleteBook(book: BookDto, model: Model): String {
+        bookService.deleteBookById(book.id!!)
+        return "redirect:/books"
     }
 }

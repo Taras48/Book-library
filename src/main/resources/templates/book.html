@@ -40,11 +40,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="book : ${books}">
+    <tr th:object="${book}">
         <td th:text="${book.id}"></td>
-        <td>
-            <a th:text="${book.name}" href="book.html" th:href="@{/edit(id=${book.id})}"></a>
-        </td>
+        <td th:text="${book.name}"></td>
         <td>
             <div class="row">
                 <a href="edit.html" th:href="@{/edit(id=${book.id})}"><button type="button">Edit</button></a>

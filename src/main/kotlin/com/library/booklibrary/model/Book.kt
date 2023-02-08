@@ -1,8 +1,6 @@
 package com.library.booklibrary.model
 
-import org.hibernate.annotations.BatchSize
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
+import org.springframework.lang.Nullable
 import javax.persistence.*
 
 @NamedEntityGraph(
@@ -30,12 +28,12 @@ class Book(
     )
     var authors: MutableList<Author> = mutableListOf(),
 
-    @ManyToOne(targetEntity = Genre::class, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "genre_id")
+    @ManyToOne(targetEntity = Genre::class, fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "genre_id", nullable = true)
     var gener: Genre? = null,
 
-    @OneToMany(mappedBy = "book",fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    var comments: MutableList<Comment> = mutableListOf()
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var comments: MutableList<Comment> = mutableListOf(),
 )
 
 
