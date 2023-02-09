@@ -2,11 +2,13 @@ package com.library.booklibrary.controller
 
 import com.library.booklibrary.dto.BookDto
 import com.library.booklibrary.service.BookService
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 
 
@@ -18,26 +20,26 @@ class BookController(
     @GetMapping("/books")
     fun getAllBook(model: Model): String {
         model.addAttribute("books", bookService.getAllBooks())
-        model["books"] = bookService.getAllBooks()!!
+        model["books"] = bookService.getAllBooks() ?: throw NotFoundException()
         return "books"
     }
 
     @GetMapping("/book")
     fun getBookById(@RequestParam("id") id: Long, model: Model): String? {
-        val book = bookService.findBookById(id)
+        val book = bookService.findBookById(id) ?: throw NotFoundException()
         model.addAttribute("book", book)
         return "book"
     }
 
     @GetMapping("/edit")
     fun getEditPageForm(@RequestParam("id") id: Long, model: Model): String? {
-        val book = bookService.findBookById(id)
+        val book = bookService.findBookById(id) ?: throw NotFoundException()
         model.addAttribute("book", book)
         return "edit"
     }
 
     @PostMapping("/add/book")
-    fun saveBook(book: BookDto, model: Model): String {
+    fun saveBook(@RequestBody book: BookDto, model: Model): String {
         bookService.saveBook(book)
         return "redirect:/books"
     }
