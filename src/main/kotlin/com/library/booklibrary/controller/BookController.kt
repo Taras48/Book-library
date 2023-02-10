@@ -1,7 +1,9 @@
 package com.library.booklibrary.controller
 
 import com.library.booklibrary.dto.BookDto
+import com.library.booklibrary.service.AuthorService
 import com.library.booklibrary.service.BookService
+import com.library.booklibrary.service.GenreService
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam
 @Controller
 class BookController(
     private val bookService: BookService,
+    private val genreService: GenreService,
+    private val authorService: AuthorService,
 ) {
 
     @GetMapping("/books")
@@ -34,7 +38,12 @@ class BookController(
     @GetMapping("/edit")
     fun getEditPageForm(@RequestParam("id") id: Long, model: Model): String? {
         val book = bookService.findBookById(id) ?: throw NotFoundException()
+        val genres = genreService.getAllGenres()
+        val authors = authorService.getAllAuthors()
+
         model.addAttribute("book", book)
+        model.addAttribute("genres", genres)
+        model.addAttribute("authors", authors)
         return "edit"
     }
 

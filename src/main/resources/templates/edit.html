@@ -24,17 +24,36 @@
 </head>
 <body>
 
-<!-- book edition -->
+
 <form id="edit-form" action="save.html" th:method="post" th:action="@{/add/book}" th:object="${book}">
-    <h3>Add book :</h3>
+    <h3>Update book :</h3>
 
 
     <div class="row">
         <label for="id-input">ID:</label>
-        <input id="id-input" name="id" type="text" value="Effective Java" th:value="*{id}"/>
-    </div><div class="row">
+        <input id="id-input" name="id" type="number" placeholder="id" th:value="*{id}"/>
+    </div>
+    <div class="row">
         <label for="book-name-input">Name:</label>
-        <input id="book-name-input" name="name" type="text" value="Effective Java" th:value="*{name}"/>
+        <input id="book-name-input" name="name" type="text" placeholder="name" th:value="*{name}"/>
+    </div>
+    <div class="row">
+        <label for="genre-select">Genre:</label>
+        <select class="genre-select" id="genre-select" >
+            <option th:each="genre : ${genres}"
+                    th:value="${genre.name}"
+                    th:text="${genre.name}">
+            </option>
+        </select>
+    </div>
+    <div class="row">
+        <label for="author-select">Author:</label>
+        <select class="author-select" id="author-select" multiple="multiple">
+            <option th:each="author : ${authors}"
+                    th:value="${author.name}"
+                    th:text="${author.name}">
+            </option>
+        </select>
     </div>
 
     <div class="row">

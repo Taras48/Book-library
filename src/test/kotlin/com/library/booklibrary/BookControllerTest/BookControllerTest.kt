@@ -3,29 +3,28 @@ package com.library.booklibrary.BookControllerTest
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.library.booklibrary.controller.BookController
 import com.library.booklibrary.dto.BookDto
+import com.library.booklibrary.service.AuthorService
 import com.library.booklibrary.service.BookService
+import com.library.booklibrary.service.GenreService
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.eq
-import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.boot.test.context.TestConfiguration
-import org.springframework.context.annotation.Bean
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
-import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
 @WebMvcTest(BookController::class)
-@ContextConfiguration(classes = [BookControllerTest.Environment::class])
-class BookControllerTest(
-    @Autowired private val bookService: BookService,
-    @Autowired private val mvc: MockMvc,
-    @Autowired private val objectMapper: ObjectMapper,
-) {
+class BookControllerTest{
+    @MockBean lateinit var bookService: BookService
+    @MockBean lateinit var genreService: GenreService
+    @MockBean lateinit var authorService: AuthorService
+    @Autowired lateinit var mvc: MockMvc
+    @Autowired lateinit var objectMapper: ObjectMapper
 
     @Test
     @DisplayName("Получение всех книг")
@@ -143,6 +142,7 @@ class BookControllerTest(
                 status { is3xxRedirection() }
             }
     }
+
     @Test
     @DisplayName("Сохранение книги. Ошибка")
     fun saveBookTestFail() {
@@ -173,11 +173,5 @@ class BookControllerTest(
             .andExpect {
                 status { is4xxClientError() }
             }
-    }
-
-    @TestConfiguration
-    internal class Environment() {
-        @Bean
-        fun getBookService(): BookService = mock()
     }
 }

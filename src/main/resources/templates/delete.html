@@ -24,14 +24,14 @@
 </head>
 <body>
 
-<!-- book edition -->
+
 <form id="delete-form" action="delete.html" th:method="post" th:action="@{/delete/book}" th:object="${book}">
     <h3>Delete book :</h3>
 
 
     <div class="row">
         <label for="id-input">ID:</label>
-        <input id="id-input" name="id" type="text" th:value="*{id}"/>
+        <input id="id-input" name="id" type="number" th:value="*{id}"/>
     </div><div class="row">
         <label for="book-name-input">Name:</label>
         <input id="book-name-input" name="name" type="text" th:value="*{name}"/>
