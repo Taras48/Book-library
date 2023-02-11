@@ -48,13 +48,20 @@ class BookController(
     }
 
     @PostMapping("/add/book")
-    fun saveBook(@RequestBody book: BookDto, model: Model): String {
+    fun saveBook( book: BookDto, model: Model): String {
         bookService.saveBook(book)
         return "redirect:/books"
     }
 
     @GetMapping("/add/book")
-    fun getSaveBookForm(model: Model) = "save"
+    fun getSaveBookForm(model: Model): String? {
+        val genres = genreService.getAllGenres()
+        val authors = authorService.getAllAuthors()
+
+        model.addAttribute("genres", genres)
+        model.addAttribute("authors", authors)
+        return "edit"
+    }
 
     @GetMapping("/delete/book")
     fun getDeleteBookForm(@RequestParam("id") id: Long, model: Model): String? {

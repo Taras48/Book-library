@@ -25,19 +25,19 @@
 <body>
 
 
-<form id="edit-form" action="save.html" th:method="post" th:action="@{/add/book}" th:object="${book}">
+<form id="edit-form" action="edit.html" th:method="post" th:action="@{/add/book}" th:object="${book}">
     <h3>Update book :</h3>
 
 
-    <div class="row">
+    <div th:if="${book != null}" class="row">
         <label for="id-input">ID:</label>
-        <input id="id-input" name="id" type="number" placeholder="id" th:value="*{id}"/>
+        <input id="id-input" name="id" type="number" placeholder="id" th:value="${book.id}"/>
     </div>
     <div class="row">
         <label for="book-name-input">Name:</label>
-        <input id="book-name-input" name="name" type="text" placeholder="name" th:value="*{name}"/>
+        <input id="book-name-input" name="name" type="text" placeholder="name" th:value="${book != null} ? ${book.name}"/>
     </div>
-    <div class="row">
+    <div th:if="${genres != null}" class="row">
         <label for="genre-select">Genre:</label>
         <select class="genre-select" id="genre-select" >
             <option th:each="genre : ${genres}"
@@ -46,7 +46,7 @@
             </option>
         </select>
     </div>
-    <div class="row">
+    <div th:if="${authors != null}" class="row">
         <label for="author-select">Author:</label>
         <select class="author-select" id="author-select" multiple="multiple">
             <option th:each="author : ${authors}"
