@@ -63,16 +63,4 @@ class BookController(
         return "edit"
     }
 
-    @GetMapping("/delete/book")
-    fun getDeleteBookForm(@RequestParam("id") id: Long, model: Model): String? {
-        val book = bookService.findBookById(id)
-        model.addAttribute("book", book)
-        return "delete"
-    }
-
-    @PostMapping("/delete/book")
-    fun deleteBook(book: BookDto, model: Model): String {
-        bookService.deleteBookById(book.id!!)
-        return "redirect:/books"
-    }
 }
