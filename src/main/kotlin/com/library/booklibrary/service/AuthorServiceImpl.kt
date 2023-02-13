@@ -9,7 +9,7 @@ import javax.transaction.Transactional
 
 @Service
 class AuthorServiceImpl(
-    val authorDao: AuthorDao,
+    private val authorDao: AuthorDao,
 ) : AuthorService {
     override fun findAuthorById(id: Long) =
         authorDao.findById(id).get().authorToAuthorDto()

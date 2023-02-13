@@ -24,9 +24,11 @@ repositories {
 dependencies {
     //Spring
 //    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+//    implementation("org.springframework.shell:spring-shell-starter:2.1.4")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.springframework.shell:spring-shell-starter:2.1.4")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-web:2.7.8")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:2.7.8")
 
 
     //Kotlin
