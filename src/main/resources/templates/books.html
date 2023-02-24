@@ -27,6 +27,19 @@
             margin-top: 10px;
         }
     </style>
+    <script>
+        function deleteBook() {
+            const idInput = document.getElementById("id-input")
+            const id = { name: idInput.value}
+            fetch("http://localhost:8085/delete/book", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(id)})
+        }
+    </script>
 </head>
 <body>
 <h3>Books:</h3>
@@ -41,14 +54,14 @@
     </thead>
     <tbody>
     <tr th:each="book : ${books}">
-        <td th:text="${book.id}"></td>
+        <td id="id-input" th:text="${book.id}"></td>
         <td>
-            <a th:text="${book.name}" href="book.html" th:href="@{/edit(id=${book.id})}"></a>
+            <a th:text="${book.name}" href="book.html" th:href="@{/book(id=${book.id})}"></a>
         </td>
         <td>
             <div class="row">
                 <a href="edit.html" th:href="@{/edit(id=${book.id})}"><button type="button">Edit</button></a>
-                <a href="delete.html" th:method="delete" th:href="@{/delete/book(id=${book.id})}"><button type="button">Delete</button></a>
+                <button type="button" onclick="deleteBook()" >Delete</button>
             </div>
         </td>
     </tr>
