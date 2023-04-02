@@ -1,13 +1,7 @@
 package com.library.booklibrary.extensions
 
-import com.library.booklibrary.dto.AuthorDto
-import com.library.booklibrary.dto.BookDto
-import com.library.booklibrary.dto.CommentDto
-import com.library.booklibrary.dto.GenreDto
-import com.library.booklibrary.model.Author
-import com.library.booklibrary.model.Book
-import com.library.booklibrary.model.Comment
-import com.library.booklibrary.model.Genre
+import com.library.booklibrary.dto.*
+import com.library.booklibrary.model.*
 
 
 fun Book.bookToBookDto() =
@@ -61,3 +55,20 @@ fun GenreDto.genreDtoToGenre() =
         this.id,
         this.name
     )
+
+fun User.userToUserDto() =
+    UserDto(
+        this.id,
+        this.name,
+        this.password,
+        this.role,
+    )
+
+fun UserDto.userDtoToUser() =
+    User(
+        this.id,
+        this.name,
+        this.password,
+        this.role,
+    )
+

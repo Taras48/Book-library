@@ -29,6 +29,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web:2.7.8")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf:2.7.8")
+    implementation("org.springframework.boot:spring-boot-starter-security:2.7.8")
+
 
 
     //Kotlin
@@ -44,6 +46,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+    testImplementation("org.springframework.security:spring-security-test:5.7.5")
+
 
 }
 allOpen {

@@ -33,3 +33,12 @@ CREATE TABLE comments
     book_id bigint references books (id) on delete cascade,
     CONSTRAINT pk_comments PRIMARY KEY (id)
 );
+
+CREATE TABLE users
+(
+    id      BIGINT AUTO_INCREMENT NOT NULL,
+    name    VARCHAR(255) NOT NULL,
+    password    VARCHAR(255) NOT NULL,
+    role    VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_users PRIMARY KEY (id)
+);
