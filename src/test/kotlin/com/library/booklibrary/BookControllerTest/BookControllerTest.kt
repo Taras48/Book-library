@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
 @WebMvcTest(BookController::class)
-@WithMockUser(username = "admin", authorities = ["admin"])
+@WithMockUser(username = "admin", roles = ["admin"])
 class BookControllerTest {
     @MockBean
     lateinit var bookService: BookService
@@ -141,6 +141,26 @@ class BookControllerTest {
             }
             .andExpect {
                 status { isOk() }
+            }
+    }
+
+    @Test
+    @DisplayName("Получение сраницы обновления. role = user")
+    @WithMockUser(username = "admin", roles = ["user"])
+    fun getEditPageFormRoleUserTestFail() {
+        val bookId = 1L
+        val book = BookDto(id = bookId, name = "name1")
+
+        whenever(bookService.findBookById(eq(bookId)))
+            .thenReturn(book)
+
+        mvc
+            .get("/edit?id=$bookId") {
+                contentType = MediaType.APPLICATION_JSON
+                accept = MediaType.APPLICATION_JSON
+            }
+            .andExpect {
+                status { isForbidden() }
             }
     }
 
