@@ -34,7 +34,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
         http.csrf().disable()
             .authorizeRequests()
             .antMatchers("/books", "/book", "/edit", "/add/book", "/delete/books").authenticated()
-            .antMatchers("/**").permitAll()
             .and().formLogin()
     }
 
