@@ -37,7 +37,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .antMatchers(HttpMethod.GET,"/books").hasAnyRole("user", "admin")
             .antMatchers(HttpMethod.GET,"/book", "/edit", "/delete/books").hasAnyRole("admin")
             .antMatchers(HttpMethod.POST, "/add/book").hasAnyRole("admin")
-            .antMatchers("/**").permitAll()
             .and().formLogin()
     }
 
