@@ -3,6 +3,7 @@ package com.library.booklibrary.config
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -33,7 +34,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/books", "/book", "/edit", "/add/book", "/delete/books").authenticated()
+            .antMatchers(HttpMethod.GET,"/books").hasAnyRole("user", "admin")
+            .antMatchers(HttpMethod.GET,"/book", "/edit", "/delete/books").hasAnyRole("admin")
+            .antMatchers(HttpMethod.POST, "/add/book").hasAnyRole("admin")
             .and().formLogin()
     }
 

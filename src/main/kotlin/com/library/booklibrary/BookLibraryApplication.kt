@@ -9,5 +9,5 @@ class BookLibraryApplication
 
 fun main(args: Array<String>) {
     runApplication<BookLibraryApplication>(*args)
-    Console.main(*args)
+//    Console.main(*args)
 }

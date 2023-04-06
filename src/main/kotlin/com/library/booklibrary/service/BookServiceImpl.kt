@@ -30,7 +30,6 @@ class BookServiceImpl(
         }
     }
 
-
     override fun saveBook(book: BookDto) =
         bookDao.save(book.bookDtoToBook())
             .bookToBookDto()
